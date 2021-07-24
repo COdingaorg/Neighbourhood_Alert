@@ -1,3 +1,11 @@
 <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data">
+  <h3 class="text-center">Add Profile:</h3>
+  {% for message in messages %}
+  <div class="alert-info">{{message}}</div>
+  {%endfor%}
+  {% for error in form.errors%}
+  <div class="alert-danger">{{error}}</div>
+  {%endfor%}
+
   {{form}}
 </form>
