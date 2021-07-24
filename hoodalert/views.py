@@ -66,16 +66,11 @@ def add_user_profile(request):
   except UserProfile.DoesNotExist:
     profile = None
   if request.method == 'POST':
-    form = UserProfileForm(request.POST)
+    form = UserProfileForm(request.POST, request.FILES)
     if form.is_valid():
-      form = UserProfileForm(request.POST, request.FILES)
       new_profile = form.save(commit = False)
       new_profile.user = request.user
-
-      try:
-        profile = UserProfile.objects.filter(user = request.user).last()
-      except UserProfile.DoesNotExist:
-        profile = None
+      new_profile.save()
 
       context = {
         'title':title,
@@ -85,11 +80,11 @@ def add_user_profile(request):
       return render(request, 'all_templates/profile.html', context)
   else:
     context = {
-        'title':title,
-        'form':form,
-        'profile':profile,
+      'title':title,
+      'form':form,
+      'profile':profile,
       }
-  return render(request, 'all_templates/profile.html', context)
+    return render(request, 'all_templates/profile.html', context)
 
 #view function to homepage
 def index(request):

@@ -1,4 +1,5 @@
 <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data">
+  {%csrf_token%}
   <h3 class="text-center">Add Profile:</h3>
   {% for message in messages %}
   <div class="alert-info">{{message}}</div>
@@ -8,4 +9,11 @@
   {%endfor%}
 
   {{form}}
+
+  <button type="submit" class="btn btn-default">Save Changes</button>
 </form>
+{% if profile %}
+{{profile.bio}}
+{{profile.photo_path.url}}
+<img src="{{profile.photo_path.url}}" alt="nothin">
+{%endif%}
