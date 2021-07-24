@@ -1,1 +1,11 @@
-{{form}}
+<form action="{% url 'login_user' %}" method="POST">
+  {% for error in form.errors %}
+  {{error}}
+  {% endfor %}
+  {% csrf_token%}
+  {%for message in messages%}
+  <p class="alert alert-info p-4 text-center">{{message}}</p>
+  {%endfor%}
+  {{form}}
+  <button class="btn btn-default" type="submit">Log in</button>
+</form>

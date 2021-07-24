@@ -1,5 +1,7 @@
-from hoodalert.forms import RegisterUserForm
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from hoodalert.forms import LoginForm, RegisterUserForm
+from django.shortcuts import redirect, render
+from django.contrib import messages
 
 # Create your views here.
 
@@ -11,12 +13,38 @@ def register_user(request):
     form = RegisterUserForm(request.POST)
     if form.is_valid():
       form.save()
+
+      return redirect('login_user')
       
   context = {
     'form':form,
     'title':title
   }
   return render(request, 'django_registration/registration_form.html', context)
+
+#login user
+def login_user(request):
+  title = 'Login to Your Account'
+  form = LoginForm
+  if request.method == 'POST':
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    newlogin =  authenticate(request, username = username, password = password)
+
+    if newlogin is not None:
+      login(request, newlogin)
+
+      return redirect('/')
+    else:
+      messages.warning(request, 'Incorrect Username or Password')
+  
+  context = {
+    'title':title,
+    'form':form,
+  }
+  return render(request, 'registration/login.html', context)
+
+#view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'
 
