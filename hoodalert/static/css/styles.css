@@ -11,7 +11,15 @@ font-family: 'Montserrat', sans-serif;*/
 --bright : rgba(216, 84, 84, 1);
 --less_bright: rgba(242, 135, 135, 1);
 }
+/*styling navbar */
+.navbar-brand{
+  font-family: 'Dancing Script', cursive;
+}
 
+/*styling index */
+h1{
+  color: red;
+}
 /* style footer */
 .footer{
   height: 30vh;
