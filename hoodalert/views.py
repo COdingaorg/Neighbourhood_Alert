@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.http.response import HttpResponseRedirect
 from hoodalert.forms import LoginForm, RegisterUserForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -43,6 +44,15 @@ def login_user(request):
     'form':form,
   }
   return render(request, 'registration/login.html', context)
+
+#logout view function
+def logout_user(request):
+  '''
+  logout a logged in user
+  '''
+  logout(request)
+
+  return redirect('login_user')
 
 #view function to homepage
 def index(request):
