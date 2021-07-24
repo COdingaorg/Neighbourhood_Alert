@@ -1,0 +1,34 @@
+<div class="reg_body row">
+  <div class="col-md-3"></div>
+  <div class="reg_form col-md-6">
+    <div class="col-md-6 formbanner">
+      {% for error in form.errors%}
+      <div class="alert alert-danger text-center">{{error}}</div>
+      {% endfor %}
+      <h2 class="text-center">Create Account</h2>
+      {% for message in messages%}
+      <p class="alert alert-info">{{message}}</p>
+      {% endfor %}
+      <div>
+        <form action="{% url 'register_user' %}" method="POST">
+          {%csrf_token%}
+        <h5>{{form.username.label}}:</h5>{{form.username}}
+        <h5>{{form.first_name.label}}:</h5>{{form.first_name}}
+        <h5>{{form.last_name.label}}:</h5>{{form.last_name}}
+        <h5>{{form.email.label}}:</h5>{{form.email}}
+        <h5>{{form.password1.label}}:</h5>{{form.password1}}
+        <h5>{{form.password2.label}}:</h5>{{form.password2}}
+        <button class="btn btn-default text-center" type="submit">Register</button>
+
+      </div>
+    </div>
+    <div class="col-md-6 regbanner">
+      <h2 class="text-center">Welcome to Hood Alert</h2>
+      <p class="text-center p-4">To fully enjoy getting and sharing of news and whats up, create an account.</p>
+      <p class="text-center p-4">We know the importance of togetherness, and what more to bring people together than the same origin.</p>
+      <p class="text-center p-4">Always be in the know, be on the same page.</p>
+      <h5>Already have an account? <a href="">Log in</a></h5>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
