@@ -89,8 +89,8 @@ def add_user_profile(request):
         'form':form,
         'profile':profile,
       }
-  return render(request, 'app_templates/profile.html', context)
-  
+  return render(request, 'all_templates/profile.html', context)
+
 #view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'
