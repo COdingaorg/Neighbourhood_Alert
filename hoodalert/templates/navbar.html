@@ -1,12 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">HOOD ALERT</a>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="#">Hood Alert</a>
   <!--search form-->
-  <form class="form-inline">
-    <div class="input-group d-flex flex-row">
-      <input type="text" class="form-control" placeholder="search Business" aria-label="business"
-        aria-describedby="basic-addon1">
-      <button class="btn btn-outline-primary">search</span>
-    </div>
+  <form class="form-inline search_form">
+      <input type="text" placeholder="search Business">
+      <button type="submit"><img src="../static/images/searching-icon-white-png.png" width="15px" alt=""></span>
   </form>
   <!--End of search form-->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -18,7 +15,16 @@
       <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link" href="#">Features</a>
       <a class="nav-item nav-link" href="#">Pricing</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

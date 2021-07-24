@@ -1,5 +1,5 @@
 /* css contant variables */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Montserrat:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Montserrat:wght@400&display=swap');
 /*font-family: 'Dancing Script', cursive;
 font-family: 'Montserrat', sans-serif;*/
 
@@ -13,13 +13,44 @@ font-family: 'Montserrat', sans-serif;*/
 }
 /*styling navbar */
 .navbar-brand{
+  font-size: 2em;
+  font-weight: 400;
   font-family: 'Dancing Script', cursive;
 }
-
-/*styling index */
-h1{
-  color: red;
+body{
+  background-color: white ;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4em;
 }
+.nav{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light_yellow);
+}
+.search_form{
+  background-color: white;
+  height: 30px;
+  border-radius: 3px;
+  padding: 2px;
+}
+.search_form>input{
+  border-width: 0px 0px 1px 0px;
+  background-color: rgba(255, 255, 255, 0);
+  width: 120px;
+}
+.search_form>input:focus{
+  border-width: 0px 0px 1px 0px;
+  background-color: rgba(255, 255, 255, 0);
+  width: 120px;
+}
+.search_form>button{
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+}
+/*styling index */
+
+
 /* style footer */
 .footer{
   height: 30vh;
@@ -32,31 +63,32 @@ h1{
   width: 50px;
   margin:0;
   margin: 20px;
+  border-radius: 50%;
   border: 2px solid white;
   background-color: white;
 }
 .footer>img:first-child:hover{
   border: 2px solid rgb(0, 0, 255);
   background-color: rgb(0, 0, 255);
-  box-shadow: 3px 3px 3px 3px rgb(0, 0, 255);
+  box-shadow: 1px 1px 4px 3px rgb(0, 0, 255);
 }
 .footer>img:nth-child(2):hover{
   border: 2px solid rgb(29,156,234);
   background-color: rgb(29,156,234);
-  box-shadow: 3px 3px 3px 3px rgb(29,156,234);
+  box-shadow: 1px 1px 4px 3px rgb(29,156,234);
 }
 .footer>img:nth-child(3):hover{
   border: 2px solid rgb(188,93,179);
   background-color: rgb(188,93,179);
-  box-shadow: 3px 3px 3px 3px rgb(188,93,179);
+  box-shadow: 1px 1px 4px 3px rgb(188,93,179);
 }
 .footer>img:nth-child(4):hover{
   border: 2px solid rgb(234,76,137);
   background-color: rgb(234,76,137);
-  box-shadow: 3px 3px 3px 3px rgb(234,76,137);
+  box-shadow: 1px 1px 4px 3px rgb(234,76,137);
 }
 .footer>img:nth-child(5):hover{
   border: 2px solid rgb(5,62,255);
   background-color: rgb(5,62,255);
-  box-shadow: 3px 3px 3px 3px rgb(5,62,255);
+  box-shadow: 1px 1px 4px 3px rgb(5,62,255);
 }
