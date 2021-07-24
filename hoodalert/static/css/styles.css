@@ -1,0 +1,54 @@
+/* css contant variables */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Montserrat:wght@100&display=swap');
+/*font-family: 'Dancing Script', cursive;
+font-family: 'Montserrat', sans-serif;*/
+
+/* Color Theme Swatches in RGBA */
+:root{
+--light_blue: rgba(96, 152, 165, 1);
+--light_yellow: rgba(242, 204, 133, 1);
+--yellow : rgba(242, 153, 75, 1);
+--bright : rgba(216, 84, 84, 1);
+--less_bright: rgba(242, 135, 135, 1);
+}
+
+/* style footer */
+.footer{
+  height: 30vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.footer>img{
+  width: 50px;
+  margin:0;
+  margin: 20px;
+  border: 2px solid white;
+  background-color: white;
+}
+.footer>img:first-child:hover{
+  border: 2px solid rgb(0, 0, 255);
+  background-color: rgb(0, 0, 255);
+  box-shadow: 3px 3px 3px 3px rgb(0, 0, 255);
+}
+.footer>img:nth-child(2):hover{
+  border: 2px solid rgb(29,156,234);
+  background-color: rgb(29,156,234);
+  box-shadow: 3px 3px 3px 3px rgb(29,156,234);
+}
+.footer>img:nth-child(3):hover{
+  border: 2px solid rgb(188,93,179);
+  background-color: rgb(188,93,179);
+  box-shadow: 3px 3px 3px 3px rgb(188,93,179);
+}
+.footer>img:nth-child(4):hover{
+  border: 2px solid rgb(234,76,137);
+  background-color: rgb(234,76,137);
+  box-shadow: 3px 3px 3px 3px rgb(234,76,137);
+}
+.footer>img:nth-child(5):hover{
+  border: 2px solid rgb(5,62,255);
+  background-color: rgb(5,62,255);
+  box-shadow: 3px 3px 3px 3px rgb(5,62,255);
+}
