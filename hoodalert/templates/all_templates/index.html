@@ -3,5 +3,40 @@
 {% load static %}
 
 {% block content %}
-<h1>RED COLOR</h1>
+<div class="index_page row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="area_business col-md-12">
+      <!--add business form-->
+      <div class="card formbuss col-md-2 p-0 m-1">
+        <div class="card-image">
+          <form action="" class="add_business">
+            <p class="adder text-center">&plus;</p>
+            <p class="text-center">Add A Business</p>
+          </form>
+        </div>
+      </div>
+      <!--End of business-->
+      <!--Business loops-->
+      <div class="card buss_card col-md-3 p-0 m-1">
+        <div class="card-image" style="background-image: url('../../static/images/shop.jpg'); 
+                                      height: 100%;
+                                      background-position: center;
+                                      background-size: contain;
+                                      ">
+          <div class="card-footer">New shop at Long Avenue</div>
+        </div>
+      </div>
+      <!--End of business loops-->
+    </div>
+    <div class="content_bd col-md-12">
+      <div class="col-md-3 lefter"></div>
+      <div class="col-md-5 middler"></div>
+      <div class="col-md-3 righter"></div>
+
+    </div>
+  </div>
+  <div class="col-md-1"></div>  
+</div>
+
 {%endblock%}

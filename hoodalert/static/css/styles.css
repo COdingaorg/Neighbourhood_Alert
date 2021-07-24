@@ -5,6 +5,7 @@ font-family: 'Montserrat', sans-serif;*/
 
 /* Color Theme Swatches in RGBA */
 :root{
+--blue:rgba(3,137,201, .5);  
 --light_blue: rgba(96, 152, 165, 1);
 --light_yellow: rgba(242, 204, 133, 1);
 --yellow : rgba(242, 153, 75, 1);
@@ -49,7 +50,25 @@ body{
   border: 0;
 }
 /*styling index */
-
+.buss_card{
+  height: 200px;
+  background-image: url('../images/shop.jpg');
+  background-position: center;
+  background-size: contain;
+}
+.adder{
+  font-size: 4em;
+  border-bottom: 1px solid white;
+  padding: 0;
+}
+.card-footer{
+  background-color: rgba(242, 153, 75, .6);
+  
+}
+.formbuss{
+  background-color: var(--blue);
+  color: white;
+}
 
 /* style footer */
 .footer{
