@@ -1,6 +1,7 @@
+from hoodalert.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
-from hoodalert.forms import LoginForm, RegisterUserForm
+from hoodalert.forms import LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
@@ -53,7 +54,43 @@ def logout_user(request):
   logout(request)
 
   return redirect('login_user')
+#view function to user profile
+def add_user_profile(request):
+  '''
+  form to update user profile
+  '''
+  title = f'{request.user.username}\'s Profile - Hood alert'
+  form = UserProfileForm
+  try:
+    profile = UserProfile.objects.filter(user = request.user).last()
+  except UserProfile.DoesNotExist:
+    profile = None
+  if request.method == 'POST':
+    form = UserProfileForm(request.POST)
+    if form.is_valid():
+      form = UserProfileForm(request.POST, request.FILES)
+      new_profile = form.save(commit = False)
+      new_profile.user = request.user
 
+      try:
+        profile = UserProfile.objects.filter(user = request.user).last()
+      except UserProfile.DoesNotExist:
+        profile = None
+
+      context = {
+        'title':title,
+        'form':form,
+        'profile':profile,
+      }
+      return render(request, 'all_templates/profile.html', context)
+  else:
+    context = {
+        'title':title,
+        'form':form,
+        'profile':profile,
+      }
+  return render(request, 'app_templates/profile.html', context)
+  
 #view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'
