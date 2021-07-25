@@ -23,3 +23,9 @@ class Neighbourhood(models.Model):
   population = models.IntegerField()
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
 
+class Business(models.Model):
+  name = models.CharField(max_length=200)
+  email = models.EmailField()
+  user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  neighborhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)
+
