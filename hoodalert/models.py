@@ -95,8 +95,8 @@ class Business(models.Model):
   neighborhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)
 
   @classmethod
-  def create_business(cls, name, email, location, user_profile, neighbourhood ):
-    new_hood = cls(name = name, email = email, location = location, user_prof = user_profile, neighborhood = neighbourhood)
+  def create_business(cls, name, email, location, user_profile_id, neighbourhood_id ):
+    new_hood = cls(name = name, email = email, location = location, owner_user_prof = user_profile_id, neighborhood = neighbourhood_id)
     new_hood.save()
   
   def delete_business(self):

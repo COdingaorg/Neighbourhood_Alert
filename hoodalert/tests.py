@@ -1,3 +1,4 @@
+from typing import NewType
 from hoodalert.models import Business, HealthDep, Neighbourhood, PoliceDep, Posts, UserProfile, User
 from django.test import TestCase
 
@@ -102,42 +103,52 @@ class TestPoliceDep(TestCase):
 
 #     self.assertEqual((updated.name,updated.location),('Aston', '2nd Avenue'))
 
-# class TestBusiness(TestCase):
-#   def setUp(self):
-#     self.new_user = User(1, 'pbkdf2_sha256$260000$NjKSHSB0A7GnXFtsT4LF3E$OtsaM4UTtddrKX81NiyU45bnVt8BOZLzHYHQP5D/fkw=','2021-07-25 00:44:38.631522+03', 'f' , 'codinga', 'caleb', 'odinga','calemasanga@gmail.com','f','t','2021-07-24 23:41:50.483079+03')
-#     self.new_user.save()
-#     self.new_profile = UserProfile(1, 'profiles/girl-cg-artwork-anime-art-anime-girl-wallpaper-preview.jpg', 'peacefule and communal',1, 'live love laugh',1,'t')
-#     self.new_profile.save_profile()
-#     self.new_neighborhood = Neighbourhood(name = 'Karuturi', location = '1st Avenue', population = 200233 ,police_dep = self.new_pd, health_dep = self.new_hd)
-#     self.new_neighborhood.save()
-#     self.new_business = Business(name = 'Coffee Shop', email = 'coffee@gmail.com', user_prof=self.new_profile, neighborhood = self.new_neighborhood)
+class TestBusiness(TestCase):
+  def setUp(self):
+    self.new_user = User(1, 'pbkdf2_sha256$260000$NjKSHSB0A7GnXFtsT4LF3E$OtsaM4UTtddrKX81NiyU45bnVt8BOZLzHYHQP5D/fkw=','2021-07-25 00:44:38.631522+03', 'f' , 'codinga', 'caleb', 'odinga','calemasanga@gmail.com','f','t','2021-07-24 23:41:50.483079+03')
+    self.new_user.save()
 
-#   def test_instance(self):
-#     self.assertTrue(isinstance(self.new_business, Business))
+    new_hd = HealthDep(1,'holy hd', '990', '990@gmail.com')
+    new_hd.save()
+    new_pd = PoliceDep(1,'holy pd', '999', '999@gmail.com')
+    new_pd.save()   
 
-#   def test_create_business(self):
-#     Business.create_business('coffee shop', 'email@gmail.com', 'junction road',self.new_profile, self.new_neighborhood)
-#     businesses = Neighbourhood.objects.all()
-#     self.assertEqual(len(businesses), 1)
+    self.new_neighborhood = Neighbourhood(1,'Karuturi', '1st Avenue',200233, 1, 1)
+    self.new_neighborhood.save()
+    self.new_profile = UserProfile(1, 'profiles/girl-cg-artwork-anime-art-anime-girl-wallpaper-preview.jpg', 'peacefule and communal', 'live love laugh','f',1,1)
+    self.new_profile.save_profile()
+    self.new_business = Business(1, 'Coffee Shop', 'coffee@gmail.com','junctionroad', 1, 1)
 
-#   def test_delete_business(self):
-#     self.new_business.save()
-#     self.new_business.delete_business()
-#     businesses = Business.objects.all()
+  def test_instance(self):
+    self.assertTrue(isinstance(self.new_business, Business))
 
-#     self.assertEqual(len(businesses), 0)
 
-#   def test_find_business(self):
-#     self.new_business.save()
-#     found_business = Business.find_business('Coffee Shop')
+  def test_create_business(self):
+    usr_prof = UserProfile.objects.get(pk = 1)
+    hood = Neighbourhood.objects.get(pk = 1)
+    Business.create_business('Coffee Shop', 'coffee@gmail.com','junctionroad', usr_prof, hood)
+    businesses = Neighbourhood.objects.all()
+    
+    self.assertEqual(len(businesses), 1)
 
-#     self.assertTrue(found_business.name,'Coffee Shop')
+  def test_delete_business(self):
+    self.new_business.save()
+    self.new_business.delete_business()
+    businesses = Business.objects.all()
+
+    self.assertEqual(len(businesses), 0)
+
+  def test_find_business(self):
+    self.new_business.save()
+    found_business = Business.find_business('Coffee Shop')
+
+    self.assertTrue(found_business.name,'Coffee Shop')
   
-#   def test_update_business(self):
-#     self.new_business.save()
-#     updated = Business.update_business('Coffee Shop', 'Cyber Shop','email@gmail.com', '2nd Avenue')
+  def test_update_business(self):
+    self.new_business.save()
+    updated = Business.update_business('Coffee Shop', 'Cyber Shop','email@gmail.com', '2nd Avenue')
 
-#     self.assertEqual((updated.name, updated.email, updated.location),('Cyber Shop', 'email@gmail.com', '2nd Avenue'))
+    self.assertEqual((updated.name, updated.email, updated.location),('Cyber Shop', 'email@gmail.com', '2nd Avenue'))
 
 # class TestPosts(TestCase):
 #   def setUp(self):
