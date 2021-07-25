@@ -1,19 +1,32 @@
 from django.db import models
-from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
-from django.db.models.expressions import Case
-from django.db.models.fields import EmailField
 
 class PoliceDep(models.Model):
   name = models.CharField(max_length=250)
   contact = models.CharField(max_length=15)
   email = models.EmailField()
 
+  def __str__(self):
+    return self.name
+
+  @classmethod
+  def create_pd(cls, name, contact, email):
+    new_pd = cls(name = name, contact = contact, email = email)
+    new_pd.save()
+
 class HealthDep(models.Model):
   name = models.CharField(max_length=250)
   contact = models.CharField(max_length=15)
   email = models.EmailField()
+
+  def __str__(self):
+    return self.name
+
+  @classmethod
+  def create_hd(cls, name, contact, email):
+    new_hd = cls(name = name, contact = contact, email = email)
+    new_hd.save()
 
 class Neighbourhood(models.Model):
   name = models.CharField(max_length=250, unique=True)
@@ -56,10 +69,11 @@ class Neighbourhood(models.Model):
 class UserProfile(models.Model):
   photo_path = models.ImageField(upload_to = 'profiles/')
   about = models.CharField(max_length=200)
-  hood = models.ForeignKey(Neighbourhood, on_delete=CASCADE, null=True)
   location_description = models.TextField(null=True)
-  user = models.ForeignKey(User, on_delete=CASCADE)
   is_admin = models.BooleanField(default=False)
+  hood = models.ForeignKey(Neighbourhood, on_delete=CASCADE, null=True)
+  user = models.ForeignKey(User, on_delete=CASCADE)
+
 
   def save_profile(self):
     self.save()
@@ -104,4 +118,6 @@ class Posts(models.Model):
   post = models.TextField()
   poster = models.ForeignKey(UserProfile, on_delete=CASCADE)
   post_image = models.ImageField(upload_to = 'posts/')
+
+  
 
