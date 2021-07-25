@@ -60,7 +60,7 @@ class Admin(models.Model):
   neighbourhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)  
 
 class Business(models.Model):
-  name = models.CharField(max_length=200)
+  name = models.CharField(max_length=200, unique=True)
   email = models.EmailField()
   location = models.TextField()
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
@@ -68,5 +68,13 @@ class Business(models.Model):
 
   @classmethod
   def create_business(cls, name, email, location, user_profile, neighbourhood ):
-    new_hood = cls(name = name, email = email, location = location, user_prof = user_profile, neighbourhood = neighbourhood)
+    new_hood = cls(name = name, email = email, location = location, user_prof = user_profile, neighborhood = neighbourhood)
     new_hood.save()
+  
+  def delete_business(self):
+    self.delete()
+
+  @classmethod
+  def find_business(cls, name):
+    to_find = cls.objects.get(name = name)
+    return to_find

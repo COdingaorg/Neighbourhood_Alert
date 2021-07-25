@@ -85,3 +85,18 @@ class TestBusiness(TestCase):
     Business.create_business('coffee shop', 'email@gmail.com', 'junction road',self.new_profile, self.new_neighborhood)
     businesses = Neighbourhood.objects.all()
     self.assertEqual(len(businesses), 1)
+
+  def test_delete_business(self):
+    self.new_business.save()
+    self.new_business.delete_business()
+    businesses = Business.objects.all()
+
+    self.assertEqual(len(businesses), 0)
+
+  def test_find_business(self):
+    self.new_business.save()
+    found_business = Business.find_business('Coffee Shop')
+
+    self.assertTrue(found_business.name,'Coffee Shop')
+
+  
