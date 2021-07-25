@@ -1,7 +1,7 @@
 from hoodalert.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
-from hoodalert.forms import LoginForm, RegisterUserForm, UserProfileForm
+from hoodalert.forms import AddBusiness, LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
@@ -86,6 +86,40 @@ def add_user_profile(request):
       }
     return render(request, 'all_templates/profile.html', context)
 
+#view function to add business
+def add_business(request):
+  '''
+  adds business
+  '''
+  title = 'Add business in your hood'
+  form = AddBusiness
+  if request.method == 'POST':
+    form = AddBusiness(request.POST)
+    try:
+      user_profile = UserProfile.objects.get(user = request.user)
+    except UserProfile.DoesNotExist:
+      user_profile = None
+
+    if user_profile is not None:
+      if form.is_valid():
+        new_business = form.save(commit=False)
+        new_business.owner_user_prof = user_profile
+        new_business.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+      
+      else:
+        messages.warning(request, 'Invalid Form')
+    else:
+      messages.warning(request, 'You need a profile to create a business')
+      return redirect('add_business')
+  else:
+    context = {
+      'title':title,
+      'form':form,
+    }
+
+    return render(request, 'all_templates/add_business.html', context)
 #view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'
