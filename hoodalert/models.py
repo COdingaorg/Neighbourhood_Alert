@@ -99,3 +99,9 @@ class Business(models.Model):
     updated = cls.objects.get(name = new_name)
     return updated
 
+class Posts(models.Model):
+  title = models.CharField(max_length=100)
+  post = models.TextField()
+  poster = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  post_image = models.ImageField(upload_to = 'posts/')
+
