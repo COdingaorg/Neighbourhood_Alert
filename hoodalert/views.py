@@ -112,7 +112,7 @@ def add_business(request):
         messages.warning(request, 'Invalid Form')
     else:
       messages.warning(request, 'You need a profile to create a business')
-      return redirect('add_business')
+      return redirect('user_profile')
   else:
     context = {
       'title':title,
