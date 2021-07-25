@@ -64,5 +64,12 @@ class TestNeighbourhood(TestCase):
     check = Neighbourhood.objects.get(name = 'Karuturi')
     self.assertEqual(updated.population, 2345)
 
+  def test_update_neighbourhood(self):
+    self.new_neighborhood.save()
+    updated = Neighbourhood.update_neighborhood('Karuturi','Aston', '2nd Avenue')
+
+    self.assertEqual((updated.name,updated.location),('Aston', '2nd Avenue'))
+
+
 
 

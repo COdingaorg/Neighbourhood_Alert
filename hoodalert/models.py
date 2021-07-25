@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     to_update.update(bio = bio)
 
 class Neighbourhood(models.Model):
-  name = models.CharField(max_length=250)
+  name = models.CharField(max_length=250, unique=True)
   location = models.TextField()
   population = models.IntegerField()
   admin_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
@@ -46,6 +46,12 @@ class Neighbourhood(models.Model):
   def update_occupants(cls, name, new_population):
     cls.objects.filter(name = name).update(population = new_population)
     updated = cls.objects.get(name = name)
+    return updated
+
+  @classmethod
+  def update_neighborhood(cls,old_name, new_name, new_location ):
+    cls.objects.filter(name = old_name).update(name = new_name, location = new_location)
+    updated = cls.objects.get(name = new_name)
     return updated
 
 
