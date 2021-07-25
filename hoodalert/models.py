@@ -62,6 +62,11 @@ class Admin(models.Model):
 class Business(models.Model):
   name = models.CharField(max_length=200)
   email = models.EmailField()
+  location = models.TextField()
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
   neighborhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)
 
+  @classmethod
+  def create_business(cls, name, email, location, user_profile, neighbourhood ):
+    new_hood = cls(name = name, email = email, location = location, user_prof = user_profile, neighbourhood = neighbourhood)
+    new_hood.save()

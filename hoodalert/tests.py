@@ -1,4 +1,4 @@
-from hoodalert.models import Neighbourhood, UserProfile, User
+from hoodalert.models import Business, Neighbourhood, UserProfile, User
 from django.test import TestCase
 
 # Create your tests here.
@@ -60,8 +60,6 @@ class TestNeighbourhood(TestCase):
   def test_update_occupants(self):
     self.new_neighborhood.save()
     updated = Neighbourhood.update_occupants('Karuturi', 2345)
-
-    check = Neighbourhood.objects.get(name = 'Karuturi')
     self.assertEqual(updated.population, 2345)
 
   def test_update_neighbourhood(self):
@@ -70,6 +68,20 @@ class TestNeighbourhood(TestCase):
 
     self.assertEqual((updated.name,updated.location),('Aston', '2nd Avenue'))
 
+class TestBusiness(TestCase):
+  def setUp(self):
+    self.new_user = User(1, 'pbkdf2_sha256$260000$NjKSHSB0A7GnXFtsT4LF3E$OtsaM4UTtddrKX81NiyU45bnVt8BOZLzHYHQP5D/fkw=','2021-07-25 00:44:38.631522+03', 'f' , 'codinga', 'caleb', 'odinga','calemasanga@gmail.com','f','t','2021-07-24 23:41:50.483079+03')
+    self.new_user.save()
+    self.new_profile = UserProfile(1, 'profiles/girl-cg-artwork-anime-art-anime-girl-wallpaper-preview.jpg', 'live love laugh',1)
+    self.new_profile.save_profile()
+    self.new_neighborhood = Neighbourhood(name = 'Karuturi', location = '1st Avenue', population = 200233 , admin_user_prof = self.new_profile)
+    self.new_neighborhood.save()
+    self.new_business = Business(name = 'Coffee Shop', email = 'coffee@gmail.com', user_prof=self.new_profile, neighborhood = self.new_neighborhood)
 
+  def test_instance(self):
+    self.assertTrue(isinstance(self.new_business, Business))
 
-
+  def test_create_business(self):
+    Business.create_business('coffee shop', 'email@gmail.com', 'junction road',self.new_profile, self.new_neighborhood)
+    businesses = Neighbourhood.objects.all()
+    self.assertEqual(len(businesses), 1)
