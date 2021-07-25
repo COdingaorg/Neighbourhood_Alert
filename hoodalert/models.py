@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict, modelformset_factory
 # Create your models here.
 class UserProfile(models.Model):
   photo_path = models.ImageField(upload_to = 'profiles/')
-  bio = models.CharField(max_length=200)
+  about = models.CharField(max_length=200)
   user = models.ForeignKey(User, on_delete=CASCADE)
   is_admin = models.BooleanField(default=False)
 
