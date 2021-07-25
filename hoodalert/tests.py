@@ -44,3 +44,15 @@ class TestNeighbourhood(TestCase):
     hoods = Neighbourhood.objects.all()
     self.assertEqual(len(hoods), 1)
   
+  def test_delete_neighbourhood(self):
+    self.new_neighborhood.save()
+    self.new_neighborhood.delete_neighbourhood()
+    hoods = Neighbourhood.objects.all()
+
+    self.assertEqual(len(hoods), 0)
+
+  def test_find_neighbourhood(self):
+    self.new_neighborhood.save()
+    found_hood = Neighbourhood.find_hood('Karuturi')
+
+    self.assertTrue(found_hood.name,'Karuturi')

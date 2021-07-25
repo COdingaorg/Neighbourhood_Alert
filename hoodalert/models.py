@@ -29,6 +29,18 @@ class Neighbourhood(models.Model):
     new_hood = cls(name = name, location = location, population = population, admin_user_prof = user_profile)
     new_hood.save()
 
+  @classmethod
+  def delete_hood(cls, id):
+    to_delete = cls.objects.get(id = id)
+    to_delete.delete()
+
+  def delete_neighbourhood(self):
+    self.delete()
+
+  @classmethod
+  def find_hood(cls, name):
+    to_find = cls.objects.get(name = name)
+    return to_find
 
 class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
