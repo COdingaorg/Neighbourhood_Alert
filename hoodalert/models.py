@@ -1,28 +1,26 @@
 from django.db import models
+from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
-from django.forms.models import model_to_dict, modelformset_factory
+from django.db.models.expressions import Case
+from django.db.models.fields import EmailField
 
-# Create your models here.
-class UserProfile(models.Model):
-  photo_path = models.ImageField(upload_to = 'profiles/')
-  about = models.CharField(max_length=200)
-  user = models.ForeignKey(User, on_delete=CASCADE)
-  is_admin = models.BooleanField(default=False)
+class PoliceDep(models.Model):
+  name = models.CharField(max_length=250)
+  contact = models.CharField(max_length=15)
+  email = models.EmailField()
 
-  def save_profile(self):
-    self.save()
-
-  @classmethod
-  def update_profile(cls, id, bio):
-    to_update = cls.objects.filter(id = id)
-    to_update.update(bio = bio)
+class HealthDep(models.Model):
+  name = models.CharField(max_length=250)
+  contact = models.CharField(max_length=15)
+  email = models.EmailField()
 
 class Neighbourhood(models.Model):
   name = models.CharField(max_length=250, unique=True)
   location = models.TextField()
   population = models.IntegerField()
-  admin_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  police_dep = models.ForeignKey(PoliceDep, on_delete=CASCADE, null=True)
+  health_dep = models.ForeignKey(HealthDep, on_delete=CASCADE, null=True)
 
   @classmethod
   def create_hood(cls, name, location, population, user_profile):
@@ -54,6 +52,22 @@ class Neighbourhood(models.Model):
     updated = cls.objects.get(name = new_name)
     return updated
 
+# Create your models here.
+class UserProfile(models.Model):
+  photo_path = models.ImageField(upload_to = 'profiles/')
+  about = models.CharField(max_length=200)
+  hood = models.ForeignKey(Neighbourhood, on_delete=CASCADE, null=True)
+  location_description = models.TextField(null=True)
+  user = models.ForeignKey(User, on_delete=CASCADE)
+  is_admin = models.BooleanField(default=False)
+
+  def save_profile(self):
+    self.save()
+
+  @classmethod
+  def update_profile(cls, id, bio):
+    to_update = cls.objects.filter(id = id)
+    to_update.update(bio = bio)
 
 class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
@@ -63,7 +77,7 @@ class Business(models.Model):
   name = models.CharField(max_length=200, unique=True)
   email = models.EmailField()
   location = models.TextField()
-  user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  owner_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
   neighborhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)
 
   @classmethod
