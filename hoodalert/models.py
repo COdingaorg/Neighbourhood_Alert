@@ -7,4 +7,6 @@ class UserProfile(models.Model):
   photo_path = models.ImageField(upload_to = 'profiles/')
   bio = models.CharField(max_length=200)
   user = models.ForeignKey(User, on_delete=CASCADE)
-  
+
+  def save_profile(self):
+    self.save()

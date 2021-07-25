@@ -70,7 +70,7 @@ def add_user_profile(request):
     if form.is_valid():
       new_profile = form.save(commit = False)
       new_profile.user = request.user
-      new_profile.save()
+      new_profile.save_profile()
 
       context = {
         'title':title,
