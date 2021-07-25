@@ -98,5 +98,11 @@ class TestBusiness(TestCase):
     found_business = Business.find_business('Coffee Shop')
 
     self.assertTrue(found_business.name,'Coffee Shop')
+  
+  def test_update_business(self):
+    self.new_business.save()
+    updated = Business.update_business('Coffee Shop', 'Cyber Shop','email@gmail.com', '2nd Avenue')
+
+    self.assertEqual((updated.name, updated.email, updated.location),('Cyber Shop', 'email@gmail.com', '2nd Avenue'))
 
   

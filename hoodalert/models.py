@@ -78,3 +78,10 @@ class Business(models.Model):
   def find_business(cls, name):
     to_find = cls.objects.get(name = name)
     return to_find
+
+  @classmethod
+  def update_business(cls,old_name, new_name, new_email, new_location ):
+    cls.objects.filter(name = old_name).update(name = new_name, email = new_email, location = new_location)
+    updated = cls.objects.get(name = new_name)
+    return updated
+
