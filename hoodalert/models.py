@@ -90,7 +90,7 @@ class Admin(models.Model):
 class Business(models.Model):
   name = models.CharField(max_length=200, unique=True)
   email = models.EmailField()
-  location = models.TextField()
+  location_or_Description = models.TextField()
   owner_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
   neighborhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)
 
