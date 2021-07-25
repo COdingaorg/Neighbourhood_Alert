@@ -10,3 +10,9 @@ class UserProfile(models.Model):
 
   def save_profile(self):
     self.save()
+
+  @classmethod
+  def update_profile(cls, id, bio):
+    to_update = cls.objects.filter(id = id)
+    to_update.update(bio = bio)
+    

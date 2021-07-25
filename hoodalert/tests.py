@@ -17,3 +17,13 @@ class TestUserProfile(TestCase):
     profiles = UserProfile.objects.all()
 
     self.assertEqual(len(profiles), 1)
+
+  def test_update_user_profile(self):
+    self.new_profile.save_profile()
+    user = User.objects.get(pk = 1)
+    new_bio = 'make sun'
+    UserProfile.update_profile(1, new_bio)
+    uptodate = UserProfile.objects.get(pk = 1)
+    uptodate.refresh_from_db()
+
+    self.assertEqual(uptodate.bio, new_bio)
