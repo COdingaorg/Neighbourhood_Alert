@@ -8,7 +8,7 @@ class UserProfile(models.Model):
   photo_path = models.ImageField(upload_to = 'profiles/')
   bio = models.CharField(max_length=200)
   user = models.ForeignKey(User, on_delete=CASCADE)
-  admin = models.BooleanField()
+  is_admin = models.BooleanField(default=False)
 
   def save_profile(self):
     self.save()
@@ -23,6 +23,12 @@ class Neighbourhood(models.Model):
   location = models.TextField()
   population = models.IntegerField()
   admin_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
+
+  @classmethod
+  def create_hood(cls, name, location, population, user_profile):
+    new_hood = cls(name = name, location = location, population = population, admin_user_prof = user_profile)
+    new_hood.save()
+
 
 class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
