@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict, modelformset_factory
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -21,7 +22,11 @@ class Neighbourhood(models.Model):
   name = models.CharField(max_length=250)
   location = models.TextField()
   population = models.IntegerField()
+  admin_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
+
+class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  neighbourhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)  
 
 class Business(models.Model):
   name = models.CharField(max_length=200)
