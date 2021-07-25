@@ -15,4 +15,4 @@ class LoginForm(AuthenticationForm):
 class UserProfileForm(forms.ModelForm):
   class Meta:
     model = UserProfile
-    fields = ('photo_path', 'about')
+    fields = ('photo_path', 'about', 'hood', 'location_description')

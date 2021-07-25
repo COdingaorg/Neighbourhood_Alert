@@ -8,7 +8,10 @@
   <div class="alert-danger">{{error}}</div>
   {%endfor%}
 
-  {{form}}
+  <h5 class="text-center">{{form.photo_path.label}}:</h5><p>{{form.photo_path}}</p>
+  <h5 class="text-center">{{form.about.label}}:</h5><p>{{form.about}}</p>
+  <h5 class="text-center">{{form.hood.label}}:</h5><p>{{form.hood}}</p>
+  <h5 class="text-center">{{form.location_description.label}}:</h5><p>{{form.location_description}}</p>
 
   <button type="submit" class="btn btn-default">Save Changes</button>
 </form>
