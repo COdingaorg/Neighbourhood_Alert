@@ -56,3 +56,13 @@ class TestNeighbourhood(TestCase):
     found_hood = Neighbourhood.find_hood('Karuturi')
 
     self.assertTrue(found_hood.name,'Karuturi')
+
+  def test_update_occupants(self):
+    self.new_neighborhood.save()
+    updated = Neighbourhood.update_occupants('Karuturi', 2345)
+
+    check = Neighbourhood.objects.get(name = 'Karuturi')
+    self.assertEqual(updated.population, 2345)
+
+
+

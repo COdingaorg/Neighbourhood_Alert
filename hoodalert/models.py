@@ -42,6 +42,13 @@ class Neighbourhood(models.Model):
     to_find = cls.objects.get(name = name)
     return to_find
 
+  @classmethod
+  def update_occupants(cls, name, new_population):
+    cls.objects.filter(name = name).update(population = new_population)
+    updated = cls.objects.get(name = name)
+    return updated
+
+
 class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
   neighbourhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)  
