@@ -18,6 +18,9 @@ font-family: 'Montserrat', sans-serif;*/
   font-weight: 400;
   font-family: 'Dancing Script', cursive;
 }
+nav{
+  border: 2px solid red;
+}
 body{
   background-color: white ;
   font-family: 'Montserrat', sans-serif;
@@ -58,6 +61,7 @@ h5, .bold{
   background-image: url('../images/shop.jpg');
   background-position: center;
   background-size: contain;
+  min-width: 180px;
 }
 .adder{
   font-size: 4em;
@@ -66,25 +70,34 @@ h5, .bold{
 }
 .card-footer{
   background-color: rgba(242, 153, 75, .6);
+  backdrop-filter: blur(4px);
+  color: white;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
   
+}
+.area_business{
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
 }
 .formbuss{
   background-color: var(--blue);
   color: white;
+  min-width: 160px;
 }
-
 /* style footer */
 .footer{
   height: 30vh;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 .footer>img{
-  width: 50px;
-  margin:0;
-  margin: 20px;
+  width: 50px;  
   border-radius: 50%;
   border: 2px solid white;
   background-color: white;

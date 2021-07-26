@@ -1,4 +1,4 @@
-from hoodalert.models import UserProfile
+from hoodalert.models import Business, UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
 from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
@@ -163,12 +163,23 @@ def add_post(request):
     return render(request, 'all_templates/add_post.html', context)
 #view function to homepage
 def index(request):
+  '''
+  renders user profile
+  renders businesses
+  '''
   title = 'Home - Neighbourhood Alert'
   try:
     user_profile = UserProfile.get_user_profile(request.user)
   except UserProfile.DoesNotExist:
     user_profile = None
+  
+  try:
+    businesses = Business.objects.all()
+  except Business.DoesNotExist:
+    businesses = None
+
   context = {
+    'businesses':businesses,
     'user_profile':user_profile,  
     'title':title,
   }
