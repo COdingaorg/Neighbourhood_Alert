@@ -1,4 +1,4 @@
-from hoodalert.models import Business, UserProfile
+from hoodalert.models import Business, Posts, UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
 from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
@@ -165,23 +165,59 @@ def add_post(request):
 def index(request):
   '''
   renders user profile
-  renders businesses
+  renders businesses that exist in the users hood
+  renders posts, all posts created
+  renders add post form
   '''
-  title = 'Home - Neighbourhood Alert'
-  try:
-    user_profile = UserProfile.get_user_profile(request.user)
-  except UserProfile.DoesNotExist:
-    user_profile = None
-  
-  try:
-    businesses = Business.objects.all()
-  except Business.DoesNotExist:
-    businesses = None
+  form = AddPost
+  if request.method == 'POST':
+    form = AddPost(request.POST, request.FILES)
+    try:
+      user_profile = UserProfile.get_user_profile(request.user)
+    except UserProfile.DoesNotExist:
+      user_profile = None
+    
+    if user_profile is not None:
+      if form.is_valid():
+        new_post = form.save(commit=False)
+        
+        new_post.poster = user_profile
+        new_post.save()
 
-  context = {
-    'businesses':businesses,
-    'user_profile':user_profile,  
-    'title':title,
-  }
+        context = {
+          'form':form,
+          }
+        messages.success(request, 'Post Created Successfully')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+      else:
+        messages.warning(request, 'Invalid Data')
+    else:
+      messages.warning(request, 'You need a User Profile to Add Post')
+      return redirect('add_profile')
+  else:
 
-  return render(request, 'all_templates/index.html', context)
+    title = 'Home - Neighbourhood Alert'
+    try:
+      user_profile = UserProfile.get_user_profile(request.user)
+    except UserProfile.DoesNotExist:
+      user_profile = None
+    
+    try:
+      businesses = Business.objects.filter(neighborhood = user_profile.hood)
+    except Business.DoesNotExist:
+      businesses = None
+
+    try:
+      posts = Posts.objects.all()
+    except Posts.DoesNotExist:
+      posts = None
+
+    context = {
+      'form':form,
+      'posts':posts,
+      'businesses':businesses,
+      'user_profile':user_profile,  
+      'title':title,
+    }
+
+    return render(request, 'all_templates/index.html', context)

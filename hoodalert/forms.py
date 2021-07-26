@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Business, Posts, User, UserProfile
-from hoodalert import models
 
 class RegisterUserForm(UserCreationForm):
   class Meta:
@@ -26,4 +25,13 @@ class AddBusiness(forms.ModelForm):
 class AddPost(forms.ModelForm):
   class Meta:
     model = Posts
+    widgets = {
+      'title':forms.TextInput(attrs={
+        'placeholder':'What is your Post about...',
+        'class':'title_input'}),
+      'description':forms.Textarea(attrs={
+        'placeholder':'Tell us ...',
+        'class':'desc_input',
+        }),
+    }
     fields = ['title', 'description', 'post_image']

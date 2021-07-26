@@ -7,10 +7,14 @@ font-family: 'Montserrat', sans-serif;*/
 :root{
 --blue:rgba(3,137,201, .5);  
 --light_blue: rgba(96, 152, 165, 1);
+--backg:rgba(105, 193, 211, 0.1);
 --light_yellow: rgba(242, 204, 133, 1);
 --yellow : rgba(242, 153, 75, 1);
 --bright : rgba(216, 84, 84, 1);
 --less_bright: rgba(242, 135, 135, 1);
+}
+*{
+  box-sizing: border-box;
 }
 /*styling navbar */
 .navbar-brand{
@@ -18,22 +22,24 @@ font-family: 'Montserrat', sans-serif;*/
   font-weight: 400;
   font-family: 'Dancing Script', cursive;
 }
-nav{
-  border: 2px solid red;
-}
 body{
-  background-color: white ;
+  background-color: var(--backg) ;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.4em;
+
 }
 h5, .bold{
   font-weight: bold;
 }
-.nav{
+.navbar{
+  background-color: var(--blue);
   color: white;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--light_yellow);
+  font-weight: 600;
+  font-size: 1.2em;
+}
+.navbar>form{
+  color: black;
+  font-size: .8em;
 }
 .search_form{
   background-color: white;
@@ -88,9 +94,23 @@ h5, .bold{
   color: white;
   min-width: 160px;
 }
+.desc_input{
+  width: 99%;
+  min-height: 20px;
+  height: auto;
+  max-height: 60px;
+  border-radius: 5px;
+}
+.add_post_form, .post_loop{
+  background-color: rgba(255, 255, 255, .8);
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid white;
+  box-shadow: 1px 1px 10px 1px var(--backg);
+}
 /* style footer */
 .footer{
-  height: 30vh;
+  height: 20vh;
   display: flex;
   flex-direction: row;
   align-items: center;

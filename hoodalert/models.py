@@ -123,6 +123,8 @@ class Posts(models.Model):
   description = models.TextField()
   post_image = models.ImageField(upload_to = 'posts/')
   poster = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  class Meta:
+    ordering = ['-id']
   
 
   def __str__(self):

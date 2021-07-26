@@ -41,12 +41,47 @@
     </div>
     <div class="content_bd col-md-12">
       <div class="col-md-3 lefter"></div>
-      <div class="col-md-5 middler"></div>
+      <div class="col-md-5 middler p-2">
+        <!--Add post Form-->
+        <div class="add_post_form">
+          <h5>Create Post:</h5>
+          <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            {% for message in messages %}
+            <div class="alert-info">{{message}}</div>
+            {%endfor%}
+            {% for error in form.errors%}
+            <div class="alert-danger">{{error}}</div>
+            {%endfor%}
+
+            <p class="description">{{form.description}}</p>
+            <p class="title">{{form.title}}</p>
+            <p class="image">{{form.post_image}}</p>
+
+            <button class="btn btn-default" type="submit">Post</button>
+          </form>
+        </div>
+        <!--End of add post form-->
+        <!--start of post loops-->
+        {%if posts%}
+        {% for post in posts %}
+        <div class="post_loop m-3">
+          <div class="title">
+            <span><img src="{{post.poster.photo_path}}" alt=""></span>
+
+          </div>
+        </div>
+        {%endfor%}
+        {%else%}
+        <p class="text-center">No Posts Added</p>
+        {%endif%}
+        <!--end of post loop-->
+      </div>
       <div class="col-md-3 righter"></div>
 
     </div>
   </div>
-  <div class="col-md-1"></div>  
+  <div class="col-md-1"></div>
 </div>
 
 {%endblock%}
