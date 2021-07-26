@@ -206,7 +206,7 @@
     <h4>Members</h4>
     {% for member in members%}
     <div class="member"
-      style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid blue; display: flex; flex-direction: column; align-items: center; justify-content:center; margin: 10px;">
+      style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid blue; display: flex; flex-direction: column; align-items: center; justify-content:center; margin: 10px; overflow: hidden;;">
       <img src="{{member.photo_path.url}}" alt="{{member.user.username}}" id="members">
     </div>
     {%endfor%}
@@ -216,7 +216,7 @@
   </div>
 </div>
 
-<!--Modal Window-->
+<!--Modal Windows-->
 <!-- Modal -->
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
   aria-hidden="true">
@@ -256,6 +256,5 @@
     </div>
   </div>
 </div>
-<!--End of modal window-->
 
 {%endblock%}

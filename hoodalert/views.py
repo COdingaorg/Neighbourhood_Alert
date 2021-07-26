@@ -98,6 +98,8 @@ def index(request):
   renders hospitals
   renders neighbourhood members
   renders add business form
+  renders today date
+  renders searched items in modal
   '''
   form = AddPost
   #---------------------------------------------
@@ -155,8 +157,9 @@ def index(request):
       return redirect('user_profile')
 
     #-------------------------------------------------------------------------------------
+    
   else:
-
+   
     title = 'Home - Neighbourhood Alert'
     try:
       user_profile = UserProfile.get_user_profile(request.user)
@@ -198,3 +201,28 @@ def index(request):
     }
 
     return render(request, 'all_templates/index.html', context)
+
+#view function to search businesses
+def search_business(request):
+   #--------------------------------------------------------------
+  #search busness
+  if 'search_business' in request.GET and request.GET['search_business']:
+    search_term = request.GET.get('search_business')
+    if search_term is not None:
+      try:
+        search_results = Business.objects.filter(name__icontains = search_term)
+      except Business.DoesNotExist:
+        search_results = None
+
+      context = {
+        'search_trm':search_term,
+        'search_results':search_results,
+        }
+      return render(request, 'all_templates/search_results.html', context)
+    else:
+      messages.warning(request, 'You did not search for anything')
+      return render(request, 'all_templates/search_results.html')
+  else:
+    return render(request, 'all_templates/search_results.html')
+
+

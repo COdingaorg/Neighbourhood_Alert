@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div class="search_results row m-5 p-5" style="height: auto; min-height: 40vh;">
+
+  <h3 class="text-center col-md-10">Search Results:</h3>
+  <a href="{% url 'home'%}" class='col-md-1'>
+    <button class="btn btn-warning ">Home</button>
+  </a>
+  {% if search_trm %}
+  {% if search_results%}
+  {% for result in search_results %}
+
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{result.name}}</h5>
+      
+      <div class="card-body">
+        <p class="card-text">{{result.location_or_Description}}</p>
+      </div>
+      <div class="card-footer" style="background-color: rgba(96, 152, 165, 1);">
+        <h5>Email</h5><p class="bold">{{result.email}}</p>
+        <h5>Owner:</h5><p class="badge badge-light">{{result.owner_user_prof.user.username}}</p>
+        <p>{{result.neighborhood.name}}</p>
+      </div>
+
+    </div>
+  </div>
+
+  {%endfor%}
+  {%else%}
+  <h4 class="text-center m-5">No Results of {{search_trm}} found</h4>
+  {%endif%}
+  {%else%}
+  <h4 class="text-center m-5">You did not search anything.</h4>
+  {%endif%}
+</div>
+{%endblock%}
