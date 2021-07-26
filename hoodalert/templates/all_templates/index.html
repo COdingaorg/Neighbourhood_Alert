@@ -11,30 +11,30 @@
         <h6 class="text-center bold">Posts</h6>
       </div>
     </a>
-    <a href="">
+    <a href="#hospital">
       <div class="icon">
         <img src="../../static/images/health_icon.png" alt="health">
         <h6 class="text-center bold">Health Centers</h6>
       </div>
     </a>
-    <a href=""></a>
+    <a href="#police">
     <div class="icon">
       <img src="../../static/images/police.png" alt="police">
       <h6 class="text-center bold">Police Stations</h6>
     </div>
-    <a href="">
+    <a href="#business">
       <div class="icon">
         <img src="../../static/images/shop.jpg" alt="business">
         <h6 class="text-center bold">Business</h6>
       </div>
     </a>
-    <a href="">
+    <a href="#members">
       <div class="icon">
         <img src="../../static/images/user_groups.png" alt="members">
         <h6 class="text-center bold">Members</h6>
       </div>
     </a>
-    <a href="">
+    <a href="#weather">
       <div class="icon">
         <img src="../../static/images/weather.png" alt="weather">
         <h6 class="text-center bold">Weather</h6>
@@ -65,7 +65,7 @@
           <div class="card-footer">
             <h3>{{business.name}}</h3>
             <h5>{{business.email}}</h5>
-            <h6>{{business.location_or_description}}</h6>
+            <h6 id="business">{{business.location_or_description}}</h6>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
             <div class="card-body">
               <h5 class="text-center">{{neighborhood.health_dep.name}}</h5>
             </div>
-            <div class="footer d-flex flex-column">
+            <div class="footer d-flex flex-column" id="hospital">
               <h6>{{neighborhood.health_dep.contact}}</h6>
               <h6>{{neighborhood.health_dep.email}}</h6>
             </div>
@@ -109,7 +109,7 @@
             <div class="card-body">
               <h5 class="text-center">{{neighborhood.police_dep.name}}</h5>
             </div>
-            <div class="footer d-flex flex-column">
+            <div class="footer d-flex flex-column" id="police">
               <h6>{{neighborhood.police_dep.contact}}</h6>
               <h6>{{neighborhood.police_dep.email}}</h6>
             </div>
@@ -190,7 +190,7 @@
         <div class="weather m-4">
           <div class="card"
             style="background-color: rgba(96, 152, 165, 1); height: auto; color: white; font-size: 1.3em; font-weight: 600; box-shadow: 2px 2px 2px 2px grey; border: 2px solid white;">
-            <h4 class="text-center">
+            <h4 class="text-center" id="weather">
               Weather:
             </h4>
             <p></p>
@@ -207,7 +207,7 @@
     {% for member in members%}
     <div class="member"
       style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid blue; display: flex; flex-direction: column; align-items: center; justify-content:center; margin: 10px;">
-      <img src="{{member.photo_path.url}}" alt="{{member.user.username}}">
+      <img src="{{member.photo_path.url}}" alt="{{member.user.username}}" id="members">
     </div>
     {%endfor%}
     {%else%}
