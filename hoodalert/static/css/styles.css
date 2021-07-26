@@ -26,7 +26,8 @@ body{
   background-color: var(--backg) ;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.4em;
-
+  width: 100vw;
+  overflow-x: hidden;
 }
 h5,h4, .bold{
   font-weight: bold;
@@ -88,6 +89,14 @@ h5,h4, .bold{
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
+  background-color: rgba(255, 255, 255, .8);
+  padding: 10px;
+  margin: 0;
+
+}
+.content_bd{
+  display: flex;
+  justify-content: space-evenly;
 }
 .formbuss{
   background-color: var(--blue);
@@ -101,12 +110,23 @@ h5,h4, .bold{
   max-height: 60px;
   border-radius: 5px;
 }
-.add_post_form, .post_loop{
+.add_post_form, .post_loop, .lefter, .righter, .left_bar, .right_bar{
   background-color: rgba(255, 255, 255, .8);
   padding: 15px;
   border-radius: 8px;
   border: 2px solid white;
   box-shadow: 1px 1px 10px 1px var(--backg);
+}
+.lefter, .righter{
+  height: 100vh;
+}
+.left_bar, .right_bar{
+  margin: 0;
+}
+.index_page{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 span.post_image>img{
   border: 2px solid var(--backg);
