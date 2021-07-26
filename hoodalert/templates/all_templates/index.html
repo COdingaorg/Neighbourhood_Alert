@@ -67,8 +67,16 @@
         {% for post in posts %}
         <div class="post_loop m-3">
           <div class="title">
-            <span><img src="{{post.poster.photo_path}}" alt=""></span>
+            <span class="post_image"><img src="{{post.poster.photo_path}}" alt="" width="30" height="30px"></span>
+            <span class="bold">{{post.poster.user.username}}</span><span class="ml-auto">{%if post.date_created%}{{post.date_created}}|timesince{%endif%}</span>
+            <hr>
+            <div class="post_image" style="background-image: url('{{post.post_image.url}}');
+                                          height: 250px;
+                                          width: 100%;">
 
+            </div>
+            <p class="bold">{{post.title}}</p>
+            <h6 class="post_desc">{{post.description}}</h6>
           </div>
         </div>
         {%endfor%}
