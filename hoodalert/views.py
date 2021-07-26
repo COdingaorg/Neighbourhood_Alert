@@ -87,43 +87,6 @@ def add_user_profile(request):
       }
     return render(request, 'all_templates/profile.html', context)
 
-#view function to add business
-def add_business(request):
-  '''
-  adds business
-  '''
-  title = 'Add business in your hood'
-  form = AddBusiness
-  if request.method == 'POST':
-    form = AddBusiness(request.POST)
-    try:
-      user_profile = UserProfile.get_user_profile(request.user)
-    except UserProfile.DoesNotExist:
-      user_profile = None
-
-    if user_profile is not None:
-      if form.is_valid():
-        new_business = form.save(commit=False)
-        new_business.owner_user_prof = user_profile
-        new_business.save()
-
-        messages.success(request, 'Business Added Successfully')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-      
-      else:
-        messages.warning(request, 'Invalid Form')
-    else:
-      messages.warning(request, 'You need a profile to create a business')
-      return redirect('user_profile')
-  else:
-    context = {
-      'title':title,
-      'form':form,
-    }
-
-    return render(request, 'all_templates/add_business.html', context)
-
-#view function to homepage
 def index(request):
   '''
   renders user profile
@@ -133,6 +96,8 @@ def index(request):
   renders neighbourhood details
   renders police_stns
   renders hospitals
+  renders neighbourhood members
+  renders add business form
   '''
   form = AddPost
   #---------------------------------------------
@@ -163,6 +128,33 @@ def index(request):
       messages.warning(request, 'You need a User Profile to Add Post')
       return redirect('add_profile')
   #-------------------------------------------------------
+  #-------------------------------------------------------
+  #start of add business form
+  form_buss = AddBusiness
+  if request.method == 'POST':
+    form_buss = AddBusiness(request.POST)
+    try:
+      user_profile = UserProfile.get_user_profile(request.user)
+    except UserProfile.DoesNotExist:
+      user_profile = None
+
+    if user_profile is not None:
+      if form_buss.is_valid():
+        new_business = form_buss.save(commit=False)
+        new_business.owner_user_prof = user_profile
+        new_business.neighborhood = user_profile.hood
+        new_business.save()
+
+        messages.success(request, 'Business Added Successfully')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+      
+      else:
+        messages.warning(request, 'Invalid Form')
+    else:
+      messages.warning(request, 'You need a profile to create a business')
+      return redirect('user_profile')
+
+    #-------------------------------------------------------------------------------------
   else:
 
     title = 'Home - Neighbourhood Alert'
@@ -185,10 +177,18 @@ def index(request):
       neighborhood = Neighbourhood.objects.get(name = user_profile.hood.name)
     except Posts.DoesNotExist:
       neighborhood = None
+
+    try:
+      members = UserProfile.objects.filter(hood = user_profile.hood)
+    except UserProfile.DoesNotExist:
+      members = None
+
+    date_today = dt.date.today()
       
-
-
     context = {
+      'form_buss':form_buss,
+      'date_today':date_today,
+      'members':members,
       'neighborhood':neighborhood,
       'form':form,
       'posts':posts,

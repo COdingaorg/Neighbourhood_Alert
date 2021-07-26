@@ -44,12 +44,12 @@
   <div class="business_loop col-md-9">
     <div class="area_business col-md-12">
       <!--add business form-->
-      <div class="card formbuss col-md-2 p-0 m-1">
+      <div class="card formbuss col-md-2 p-0 m-1" style="display: flex; align-items: center; justify-content: center;">
         <div class="card-image">
-          <a href="{% url 'add_business' %}">
-            <p class="adder text-center">&plus;</p>
-            <p class="text-center">Add A Business</p>
-          </a>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            <span style="font-size: 4em;">&plus;</span><br> Add A Business
+          </button>
         </div>
       </div>
       <!--End of business-->
@@ -169,13 +169,93 @@
         {%endif%}
         <!--end of post loop-->
       </div>
-      <div class="col-md-3 righter"></div>
+      <div class="col-md-3 righter">
+        <div class="event card">
+          <div class="card-image">
+            <img src="../../static/images/christmas.jpeg" alt="christmas" style="width: 100%;">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">
+              2021 Christmas Party
+            </h4>
+            <p>Bookings to who will host our 2021 christmas party is ongoing. Submit your name
+              so that it can be drafted for voting by members. Lates submission is on OCT 2021.
+              If you know a friend who is goo at organizing parties, Nominate them and we will let them know.
+            </p>
+            <div class="card-footer">
+              Host of Last Years Event<p class="badge badge-light">Njeri and Johnte</p>
+            </div>
+          </div>
+        </div>
+        <div class="weather m-4">
+          <div class="card"
+            style="background-color: rgba(96, 152, 165, 1); height: auto; color: white; font-size: 1.3em; font-weight: 600; box-shadow: 2px 2px 2px 2px grey; border: 2px solid white;">
+            <h4 class="text-center">
+              Weather:
+            </h4>
+            <p></p>
+            <p class="text-center">Date Today :<br> {{date_today}}</p>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
   <div class="col-md-1 right_bar">
-
+    {% if members%}
+    <h4>Members</h4>
+    {% for member in members%}
+    <div class="member"
+      style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid blue; display: flex; flex-direction: column; align-items: center; justify-content:center; margin: 10px;">
+      <img src="{{member.photo_path.url}}" alt="{{member.user.username}}">
+    </div>
+    {%endfor%}
+    {%else%}
+    <p>No Members</p>
+    {%endif%}
   </div>
 </div>
+
+<!--Modal Window-->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'home' %}" method="POST">
+          {%csrf_token%}
+          <h3 class="text-center">Add Business:</h3>
+          {% for message in messages %}
+          <div class="alert-info">{{message}}</div>
+          {%endfor%}
+          {% for error in form_buss.errors%}
+          <div class="alert-danger">{{error}}</div>
+          {%endfor%}
+
+          <h5 class="text-left">{{form_buss.name.label}}:</h5>
+          <p>{{form_buss.name}}</p>
+          <h5 class="text-left">{{form_buss.email.label}}:</h5>
+          <p>{{form_buss.email}}</p>
+          <h5 class="text-left">{{form_buss.location_or_Description.label}}:</h5>
+          <p>{{form_buss.location_or_Description}}</p>
+
+          <button type="submit" class="btn btn-default">Save Changes</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End of modal window-->
 
 {%endblock%}

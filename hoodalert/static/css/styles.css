@@ -132,7 +132,11 @@ h5,h4, .bold{
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-
+}
+.righter{
+  display: flex;
+  flex-direction: column;
+  height: 150vh;
 }
 .index_page{
   display: flex;

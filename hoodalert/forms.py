@@ -20,7 +20,7 @@ class UserProfileForm(forms.ModelForm):
 class AddBusiness(forms.ModelForm):
   class Meta:
     model = Business
-    fields = ('name', 'email', 'location_or_Description', 'neighborhood')
+    fields = ('name', 'email', 'location_or_Description')
 
 class AddPost(forms.ModelForm):
   class Meta:
