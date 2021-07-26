@@ -85,7 +85,7 @@ class UserProfile(models.Model):
 
   @classmethod
   def get_user_profile(cls, user):
-    user_profile = cls.objects.get(user = user)
+    user_profile = cls.objects.filter(user = user).last()
     return user_profile
 
 class Admin(models.Model):

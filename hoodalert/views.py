@@ -96,7 +96,7 @@ def add_business(request):
   if request.method == 'POST':
     form = AddBusiness(request.POST)
     try:
-      user_profile = UserProfile.objects.get(user = request.user)
+      user_profile = UserProfile.get_user_profile(request.user)
     except UserProfile.DoesNotExist:
       user_profile = None
 
@@ -106,6 +106,7 @@ def add_business(request):
         new_business.owner_user_prof = user_profile
         new_business.save()
 
+        messages.success(request, 'Business Added Successfully')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
       
       else:
@@ -131,7 +132,7 @@ def add_post(request):
   if request.method == 'POST':
     form = AddPost(request.POST, request.FILES)
     try:
-      user_profile = UserProfile.objects.get(user = request.user)
+      user_profile = UserProfile.get_user_profile(request.user)
     except UserProfile.DoesNotExist:
       user_profile = None
     
@@ -141,6 +142,13 @@ def add_post(request):
         
         new_post.poster = user_profile
         new_post.save()
+
+        context = {
+          'form':form,
+          'title':title,
+          }
+        messages.success(request, 'Post Created Successfully')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
       else:
         messages.warning(request, 'Invalid Data')
     else:
