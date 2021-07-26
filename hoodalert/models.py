@@ -6,6 +6,8 @@ class PoliceDep(models.Model):
   name = models.CharField(max_length=250)
   contact = models.CharField(max_length=15)
   email = models.EmailField()
+  class Meta:
+    ordering = ['-id']
 
   def __str__(self):
     return self.name
@@ -19,6 +21,8 @@ class HealthDep(models.Model):
   name = models.CharField(max_length=250)
   contact = models.CharField(max_length=15)
   email = models.EmailField()
+  class Meta:
+    ordering = ['-id']
 
   def __str__(self):
     return self.name
@@ -98,6 +102,8 @@ class Business(models.Model):
   location_or_Description = models.TextField()
   owner_user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
   neighborhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)
+  class Meta:
+    ordering = ['-id']
 
   @classmethod
   def create_business(cls, name, email, location, user_profile_id, neighbourhood_id ):

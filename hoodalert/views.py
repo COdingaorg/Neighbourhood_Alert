@@ -1,4 +1,4 @@
-from hoodalert.models import Business, Posts, UserProfile
+from hoodalert.models import Business, HealthDep, PoliceDep, Posts, UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
 from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
@@ -168,15 +168,18 @@ def index(request):
   renders businesses that exist in the users hood
   renders posts, all posts created
   renders add post form
+  renders health centers and police deps
   '''
   form = AddPost
+  #---------------------------------------------
+  #render Form add post
   if request.method == 'POST':
     form = AddPost(request.POST, request.FILES)
     try:
       user_profile = UserProfile.get_user_profile(request.user)
     except UserProfile.DoesNotExist:
       user_profile = None
-    
+   
     if user_profile is not None:
       if form.is_valid():
         new_post = form.save(commit=False)
@@ -194,6 +197,7 @@ def index(request):
     else:
       messages.warning(request, 'You need a User Profile to Add Post')
       return redirect('add_profile')
+  #-------------------------------------------------------
   else:
 
     title = 'Home - Neighbourhood Alert'
@@ -208,11 +212,23 @@ def index(request):
       businesses = None
 
     try:
-      posts = Posts.objects.all()
+      posts = Posts.objects.filter(neighborhood = user_profile.hood)
     except Posts.DoesNotExist:
       posts = None
 
+    try:
+      police_stns = PoliceDep.objects.filter(neighborhood = user_profile.hood)
+    except PoliceDep.DoesNotExist:
+      police_stns = None
+  
+    try:
+      hospitals = HealthDep.objects.filter(neighborhood = user_profile.hood)
+    except HealthDep.DoesNotExist:
+      hospitals = None
+
     context = {
+      'police_stns':police_stns,
+      'hospitals':hospitals,
       'form':form,
       'posts':posts,
       'businesses':businesses,
