@@ -23,6 +23,9 @@ body{
   font-family: 'Montserrat', sans-serif;
   font-size: 1.4em;
 }
+h5, .bold{
+  font-weight: bold;
+}
 .nav{
   color: white;
   display: flex;

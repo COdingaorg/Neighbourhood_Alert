@@ -164,8 +164,12 @@ def add_post(request):
 #view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'
-
+  try:
+    user_profile = UserProfile.get_user_profile(request.user)
+  except UserProfile.DoesNotExist:
+    user_profile = None
   context = {
+    'user_profile':user_profile,  
     'title':title,
   }
 
