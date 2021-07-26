@@ -14,8 +14,8 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav d-flex align-items-center justify-c0ntent-center">
       <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Features</a>
-      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link" href="#weather">Weather</a>
+      <a class="nav-item nav-link" href="#post_loop">Posts</a>
 
       <img src="{{user_profile.photo_path.url}}" alt="" class="ml-5 mr-5" width="30px" height="30px">
       {% if request.user.is_authenticated %}
@@ -27,7 +27,10 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="{% url 'user_profile' %}">Profile</a>
           <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="{% url 'change_hood' %}">Change Neighbourhood</a>
           <a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a>
+          
+          
         </div>
       </div>
       <div class="ml-5">

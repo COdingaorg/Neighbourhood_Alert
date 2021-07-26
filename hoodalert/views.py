@@ -225,4 +225,13 @@ def search_business(request):
   else:
     return render(request, 'all_templates/search_results.html')
 
+#view function to change hood 
+def change_hood(request):
+  '''
+  renders change of neighbourhood
+  '''
 
+  context = {
+    
+  }
+  return render(request, 'all_templates/profile.html', context)

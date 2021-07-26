@@ -206,3 +206,119 @@ span.post_image>img{
   background-color: rgb(5,62,255);
   box-shadow: 1px 1px 4px 3px rgb(5,62,255);
 }
+/*styling profile page*/
+.profile{
+  background-color: white;
+  background-image: url('../images/abstract_bg.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position:right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: auto;
+
+}
+.title_profile{
+  background-color: white;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+.left_profile{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: center;
+  height: 500px;
+}
+.left_profile>.prof_image{
+  margin-top: 10px;
+  height: 200px;
+  width: 100%;
+  border: 2px solid rgba(255, 230, 0, .2);
+  background-color: rgba(255, 230, 0, .1);
+}
+.main_page{
+  background-color: rgba(128, 128, 128, .6);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.image_profile{
+  background-color: white;
+  height: 400px;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 10px;
+}
+.recc{
+  background-color: white;
+  border-radius: 10px;
+  overflow-x: scroll;
+}
+.playlist{
+  border: 2px solid white;
+  height: 600px;
+  overflow-y: scroll;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+}
+.card-image{
+  border-radius: 0%;
+}
+.playlist>.card{
+  margin: 3px;
+}
+.redirect_btn{
+  width: auto;
+  height: 30px;
+  margin: 5px;
+  border: 1px solid rgb(255, 230, 0);
+  color: black;
+}
+.redir{
+  border: 1px solid rgb(255, 230, 0);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+  background-color: rgba(255, 230, 0, .1);
+}
+svg#chart{
+  background-color: black;
+}
+.overlay{
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+}
+.inset{
+  background-color: rgba(255, 255, 255, .7);
+  width: 80%;
+  height: 80%;
+  border: 2px solid white;
+  padding: 20px;
+  box-shadow: 2px 2px 5px white;
+}
+.comp_details{
+  height: 290px;
+}
+.remove-btn{
+  width:40px;
+  font-size: .6em;
+  padding: 1px;
+}
