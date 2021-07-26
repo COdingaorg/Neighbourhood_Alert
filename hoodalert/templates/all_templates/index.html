@@ -68,7 +68,7 @@
         <div class="post_loop m-3">
           <div class="title">
             <span class="post_image"><img src="{{post.poster.photo_path}}" alt="" width="30" height="30px"></span>
-            <span class="bold">{{post.poster.user.username}}</span><span class="ml-auto">{%if post.date_created%}{{post.date_created}}|timesince{%endif%}</span>
+            <span class="bold">{{post.poster.user.username}}</span><span class="ml-auto">{%if post.date_created%}{{post.date_created|timesince}}{%endif%}</span>
             <hr>
             <div class="post_image" style="background-image: url('{{post.post_image.url}}');
                                           height: 250px;
@@ -78,6 +78,10 @@
             <p class="bold">{{post.title}}</p>
             <h6 class="post_desc">{{post.description}}</h6>
           </div>
+          <div class="tags d-flex flex-row"></div>
+          <p class="m-0">Tags:</p>
+          <h6 class="bold badge badge-warning">{{post.poster.hood.name}}</h6>
+          <h6 class="bold badge badge-warning">{{post.title|truncatechars:9}}</h6>
         </div>
         {%endfor%}
         {%else%}
