@@ -128,12 +128,31 @@ def add_post(request):
   '''
   form = AddPost
   title = 'Add Post'
+  if request.method == 'POST':
+    form = AddPost(request.POST, request.FILES)
+    try:
+      user_profile = UserProfile.objects.get(user = request.user)
+    except UserProfile.DoesNotExist:
+      user_profile = None
+    
+    if user_profile is not None:
+      if form.is_valid():
+        new_post = form.save(commit=False)
+        
+        new_post.poster = user_profile
+        new_post.save()
+      else:
+        messages.warning(request, 'Invalid Data')
+    else:
+      messages.warning(request, 'You need a User Profile to Add Post')
+      return redirect('add_profile')
+  else:
 
-  context = {
-    'form':form,
-    'title':title,
-  }
-  return render(request, 'all_templates/add_post.html', context)
+    context = {
+      'form':form,
+      'title':title,
+    }
+    return render(request, 'all_templates/add_post.html', context)
 #view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'

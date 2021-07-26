@@ -79,9 +79,14 @@ class UserProfile(models.Model):
     self.save()
 
   @classmethod
-  def update_profile(cls, id, bio):
+  def update_profile(cls, id, about):
     to_update = cls.objects.filter(id = id)
-    to_update.update(bio = bio)
+    to_update.update(about = about)
+
+  @classmethod
+  def get_user_profile(cls, user):
+    user_profile = cls.objects.get(user = user)
+    return user_profile
 
 class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
@@ -96,7 +101,7 @@ class Business(models.Model):
 
   @classmethod
   def create_business(cls, name, email, location, user_profile_id, neighbourhood_id ):
-    new_hood = cls(name = name, email = email, location = location, owner_user_prof = user_profile_id, neighborhood = neighbourhood_id)
+    new_hood = cls(name = name, email = email, location_or_Description = location, owner_user_prof = user_profile_id, neighborhood = neighbourhood_id)
     new_hood.save()
   
   def delete_business(self):
@@ -109,7 +114,7 @@ class Business(models.Model):
 
   @classmethod
   def update_business(cls,old_name, new_name, new_email, new_location ):
-    cls.objects.filter(name = old_name).update(name = new_name, email = new_email, location = new_location)
+    cls.objects.filter(name = old_name).update(name = new_name, email = new_email, location_or_Description = new_location)
     updated = cls.objects.get(name = new_name)
     return updated
 
