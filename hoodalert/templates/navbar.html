@@ -3,9 +3,10 @@
   <!--search form-->
   <form action="{% url 'search_business' %}" class="form-inline search_form" method="GET">
     <input type="text" placeholder="search_business" name="search_business">
-    <button type="submit" class="btn btn-default" width="15px" alt=""><img src="../static/images/searching-icon-white-png.png" width="15px" alt=""></span>
+    <button type="submit" class="btn btn-default" width="15px" alt=""><img
+        src="../static/images/searching-icon-white-png.png" width="15px" alt=""></span>
   </form>
-  
+
   <!--End of search form-->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,16 +28,24 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="{% url 'user_profile' %}">Profile</a>
           <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="{% url 'change_hood' %}">Change Neighbourhood</a>
+          <a class="dropdown-item" href="{% url 'user_profile' %}">Change Neighbourhood</a>
           <a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a>
-          
-          
+
+
         </div>
       </div>
+      {% if not user_profile%}
+
       <div class="ml-5">
         <p class="bold m-0">Hood:</p>
-        <span>{{user_profile.hood.name}}</span>
+        <span>Create Profile and add your Neighbourhood</span>
       </div>
+      {%else%}
+      <div class="ml-5">
+        <p class="bold m-0">Hood:</p>
+        <span>{{user_profile.hood.name}}{{profile.hood.name}}</span>
+      </div>
+      {%endif%}
       {% else %}
       <a href="{% url 'login_user' %}">REGISTER/LOGIN</a>
       {%endif%}

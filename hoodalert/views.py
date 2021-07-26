@@ -1,7 +1,7 @@
 from hoodalert.models import Business, HealthDep, Neighbourhood, PoliceDep, Posts, UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
-from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
+from hoodalert.forms import AddBusiness, AddPost, ChangeHood, LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 import datetime as dt
@@ -80,12 +80,32 @@ def add_user_profile(request):
       }
       return render(request, 'all_templates/profile.html', context)
   else:
-    context = {
+    form_hood_change = ChangeHood
+    if request.method == 'POST':
+      new_hood = form_hood_change.cleaned_data['hood']
+      profile_query = UserProfile.objects.filter(user = request.user)
+      if profile is not None:
+        profile_query.update(hood = 2)
+
+        context = {
+            'form_hood_change':form_hood_change,
+          }
+        return render(request,'all_templates/profile.html', context )
+      else:
+        context = {
+            'form_hood_change':form_hood_change,
+          }
+        messages.warning(request, 'Create User Profile to Proceed')
+        return render(request, 'all_templates/profile.html', context)
+
+  form_hood_change = ChangeHood
+  context = {
+      'form_hood_change':form_hood_change,
       'title':title,
       'form':form,
       'profile':profile,
       }
-    return render(request, 'all_templates/profile.html', context)
+  return render(request, 'all_templates/profile.html', context)
 
 def index(request):
   '''
@@ -159,6 +179,9 @@ def index(request):
     #-------------------------------------------------------------------------------------
     
   else:
+    members = None
+    neighborhood = None
+    businesses = None
    
     title = 'Home - Neighbourhood Alert'
     try:
@@ -166,25 +189,28 @@ def index(request):
     except UserProfile.DoesNotExist:
       user_profile = None
     
-    try:
-      businesses = Business.objects.filter(neighborhood = user_profile.hood)
-    except Business.DoesNotExist:
-      businesses = None
+    if user_profile:
+      try:
+        businesses = Business.objects.filter(neighborhood = user_profile.hood)
+      except Business.DoesNotExist or UserProfile.DoesNotExist:
+        businesses = None
 
     try:
       posts = Posts.objects.all()
     except Posts.DoesNotExist:
       posts = None
 
-    try:
-      neighborhood = Neighbourhood.objects.get(name = user_profile.hood.name)
-    except Posts.DoesNotExist:
-      neighborhood = None
+    if user_profile:
+      try:
+        neighborhood = Neighbourhood.objects.get(name = user_profile.hood.name)
+      except Posts.DoesNotExist or UserProfile.DoesNotExist:
+        neighborhood = None
 
-    try:
-      members = UserProfile.objects.filter(hood = user_profile.hood)
-    except UserProfile.DoesNotExist:
-      members = None
+    if user_profile:
+      try:
+        members = UserProfile.objects.filter(hood = user_profile.hood)
+      except UserProfile.DoesNotExist or UserProfile.DoesNotExist:
+        members = None
 
     date_today = dt.date.today()
       
@@ -224,14 +250,3 @@ def search_business(request):
       return render(request, 'all_templates/search_results.html')
   else:
     return render(request, 'all_templates/search_results.html')
-
-#view function to change hood 
-def change_hood(request):
-  '''
-  renders change of neighbourhood
-  '''
-
-  context = {
-    
-  }
-  return render(request, 'all_templates/profile.html', context)

@@ -3,201 +3,193 @@
 {% load static %}
 {% load bootstrap3 %}
 {% block content %}
-  <div class="col-md-11">
-    <div class="col-md-3 left_profile">
-      {% if not user_profile %}
-      <div class="prof_image" style="background-image: url('{% static 'images/human-avatar-profle.png' %}');
+<div class="col-md-12">
+  <div class="col-md-3 left_profile">
+    {% if not profile %}
+    <div class="prof_image" style="background-image: url('{% static 'images/human-avatar-profle.png' %}');
                background-position: center;
                background-size: contain;
                background-repeat:no-repeat;">
-      </div>
-      {%else%}
-      <div class="prof_image" style="background-image: url('{{user_profile.photo_path.url}}');
+    </div>
+    {%else%}
+    <div class="prof_image" style="background-image: url('{{profile.photo_path.url}}');
                background-position: center;
                background-size: contain;
                background-repeat:no-repeat;">
-      </div>
+    </div>
 
-      {%endif%}
-      <p>{{request.user.first_name}}-{{request.user.last_name}}</p>
-      <!--if it is the owner, edit profile, else, follow-->
-      {%if user_profile %}
-      {% if request.user.id != user_profile.user.id%}
-      {%else%}
-      <strong>
-        <button type="button" class="btn btn-default m-2" data-toggle="modal" data-target="#exampleModalLong"
-          class="edit_profile">
-          Edit Profile
-        </button>
-      </strong>
-      {%endif%}
-      {%else%}
-      <strong>
-        <button type="button" class="btn btn-default m-5" data-toggle="modal" data-target="#addprofileModalLong"
-          class="edit_profile">
-          Add Profile
-        </button>
-      </strong>
-      {%endif%}
-      <div class="redir m-3">
-        <a href="/" class="btn btn-warning redirect_btn col-md-8">
-          <p class="badge badge-success p-auto">Dashboard</p>
-        </a>
-
-        <a href="/" class="btn btn-warning redirect_btn col-md-8">
-          <p class="badge badge-success p-auto">To Watch</p>
-        </a>
-        <a href="/" class="btn btn-warning redirect_btn col-md-8">
-          <p class="badge badge-success p-auto">Home</p>
-        </a>
-        <a href="/" class="btn btn-warning redirect_btn col-md-8">
-          <p class="badge badge-success p-auto">Playlist</p>
-        </a>
-
-      </div>
-
-      <a href="{% url 'logout' %}" class="border border-warning redirect_btn p-2">
-        <p>Logout</p>
+    {%endif%}
+    <p>{{request.user.first_name}}-{{request.user.last_name}}</p>
+    <!--if it is the owner, edit profile, else, follow-->
+    {%if profile %}
+    {% if request.user.id == profile.user.id%}
+    <strong>
+      <button type="button" class="btn btn-default m-2" data-toggle="modal" data-target="#addprofileModalLong"
+        class="edit_profile">
+        Edit Profile
+      </button>
+    </strong>
+    {%endif%}
+    {%else%}
+    <strong>
+      <button type="button" class="btn btn-default m-5" data-toggle="modal" data-target="#addprofileModalLong"
+        class="edit_profile">
+        Add Profile
+      </button>
+    </strong>
+    {%endif%}
+    <div class="redir m-3">
+      <a href="#profile" class="btn btn-warning redirect_btn col-md-8">
+        <p class="badge badge-success p-auto">Dashboard</p>
       </a>
 
+      <a href="" class="btn btn-warning redirect_btn col-md-10"  data-toggle="modal" data-target="#changehood">
+        <p class="badge badge-success p-auto">
+          {{profile.hood.name}}--Change Area
+        </p>
+      </a>
+      <a href="/" class="btn btn-warning redirect_btn col-md-8">
+        <p class="badge badge-success p-auto">Home</p>
+      </a>
 
     </div>
-    <div class="col-md-9 right_profile">
-      <div class="col-md-12 title_profile">
-        {% for message in messages%}
-        <div class="alert alert-danger">
-          {{message}}
-        </div>
-        {%endfor%}
-        <div class="col-md-8">
-          <h3>Netflic Account - {{request.user.username}}</h3>
-          <i>{% if user_profile %} {{user_profile.tagline}} {%else%} 'No Taglines Added'{%endif%}</i>
-        </div>
-        <div class="col-md-3 d-flex flex-row">
-          <a href="#" class="btn btn-warning redirect_btn col-md-8">
-            <p class="badge badge-success p-auto">Settings</p>
-          </a>
 
-          <a href="/"><button class="btn btn-default">Home</button></a>
+    <a href="{% url 'logout' %}" class="border border-warning redirect_btn p-2">
+      <p>Logout</p>
+    </a>
 
-        </div>
+
+
+  </div>
+  <div class="col-md-9 right_profile">
+    <div class="col-md-12 title_profile">
+      {% for message in messages%}
+      <div class="alert alert-danger">
+        {{message}}
       </div>
-      <div class="col-md-12 main_page">
-        <div class="col-md-12 playlist">
-
-          {% if user_profile%}
-          {% if playlist_items%}
-          {% for movie in playlist_items %}
-
-
-          <div class="card col-md-3">
-            <a href="">
-              <div class="card-image" style="background-image: url('https://www.themoviedb.org/t/p/w220_and_h330_face{{movie.poster_path}}');
-                                      height: 200px;
-                                      background-size: contain;
-                                      background-position: center;
-                                      background-repeat: no-repeat;
-                                      ">
-              </div>
-
-              <div class="card-footer">
-                <p class="text-center bold">{{movie.original_title}}</p>
-                <h6>Added {{movie.date_added|timesince}} ago</h6>
-                <button class="btn btn-danger remove-btn">Remove</button>
-              </div>
-          </div>
-          </a>
-
-
-          {%endfor%}
-          {%else%}
-          <p class="text-center">No Movies in PlayList</p>
-          {%endif%}
-          {%else%}
-          <p class="text-center">Add Your Profile to Proceed</p>
-
-          {%endif%}
-
-        </div>
+      {%endfor%}
+      <div class="col-md-8">
+        <h3>Hood Alert - {{request.user.username}}</h3>
+        <i>{% if profile %} {{profile.about}} {%else%} 'No About Added'{%endif%}</i>
       </div>
+      <div class="col-md-3 d-flex flex-row">
+        <a href="#" class="btn btn-warning redirect_btn col-md-8">
+          <p class="badge badge-success p-auto">Settings</p>
+        </a>
 
+        <a href="/"><button class="btn btn-default">Home</button></a>
+
+      </div>
     </div>
-  </div>
-  <div class="col-md-12 recc">
-    {% if user_profile%}
-    {% if recc_items%}
-    {% for movie in recc_items %}
+    <div class="col-md-12 main_page">
+      <div class="col-md-12 playlist">
 
-    {{movie.original_title}}
+        {% if profile%}
+        <div class="card">
 
-    {%endfor%}
-    {%else%}
-    <p class="text-center">No Movies in Recommendation</p>
-    {%endif%}
-    {%else%}
-    <p class="text-center">Add Your Profile to Proceed</p>
-
-    {%endif%}
-  </div>
-
-  <!--Modal Window-->
-  <!-- Button trigger modal -->
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="addprofileModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-center" id="exampleModalLongTitle">Update Profile</h5><img
-            src="{%if user_profile %}{{user_profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
-        {% for message in messages%}
-        <div class="alert alert-warning">
-          {{message}}
-        </div>
+        {%else%}
+        <p class="text-center">Add Your Profile to Proceed</p>
+
+        {%endif%}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% block footer %}
+
+{%endblock%}
+<!--Modal Window-->
+<!-- Modal -->
+<div class="modal fade" id="addprofileModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLongTitle">Update Profile</h5><img
+          src="{%if profile %}{{profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% for message in messages%}
+      <div class="alert alert-warning">
+        {{message}}
+      </div>
+      {%endfor%}
+      <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data" class="p-4">
+        {%csrf_token%}
+        <h3 class="text-center">Add Profile:</h3>
+        {% for message in messages %}
+        <div class="alert-info">{{message}}</div>
         {%endfor%}
-        <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data">
-          {%csrf_token%}
-          <h3 class="text-center">Add Profile:</h3>
-          {% for message in messages %}
-          <div class="alert-info">{{message}}</div>
-          {%endfor%}
-          {% for error in form.errors%}
-          <div class="alert-danger">{{error}}</div>
-          {%endfor%}
+        {% for error in form.errors%}
+        <div class="alert-danger">{{error}}</div>
+        {%endfor%}
+        <hr>
+        <h5 class="text-left">{{form.photo_path.label}}:</h5>
+        <p>{{form.photo_path}}</p>
+        <h5 class="text-left">{{form.about.label}}:</h5>
+        <p>{{form.about}}</p>
+        <h5 class="text-left">{{form.hood.label}}:</h5>
+        <p>{{form.hood}}</p>
+        <h5 class="text-left">{{form.location_description.label}}:</h5>
+        <p>{{form.location_description}}</p>
 
-          <h5 class="text-center">{{form.photo_path.label}}:</h5>
-          <p>{{form.photo_path}}</p>
-          <h5 class="text-center">{{form.about.label}}:</h5>
-          <p>{{form.about}}</p>
-          <h5 class="text-center">{{form.hood.label}}:</h5>
-          <p>{{form.hood}}</p>
-          <h5 class="text-center">{{form.location_description.label}}:</h5>
-          <p>{{form.location_description}}</p>
-
-          <button type="submit" class="btn btn-default">Save Changes</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="close btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success">Save changes</button>
-      </div>
+        <button type="submit" class="btn btn-default">Save Changes</button>
       </form>
     </div>
+    <div class="modal-footer">
+      <button type="button" class="close btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-outline-success">Save changes</button>
+    </div>
+    </form>
   </div>
-  </div>
-  <!--End of modal window-->
+</div>
+<!--End of modal window-->
+<!-- change hood modal-->
+<div class="modal fade" id="changehood" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLongTitle">Update Profile</h5><img
+          src="{%if profile %}{{profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% for message in messages%}
+      <div class="alert alert-warning">
+        {{message}}
+      </div>
+      {%endfor%}
+      <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data" class="p-4">
+        {%csrf_token%}
+        <h3 class="text-center">Update Neighbourhood:</h3>
+        <h6 class="text-center">Select from Drop-dowm</h6>
+        <h6 class="text-center"> <i> If your neighborhood does not exist, let our admin know to update </i></h6>
+        <a href="mailto:calemasanga@gmail.com?cc = ''&bcc=caleb.odinga@student.moringaschool.com&subject=New%20Neighbourhood&to&add">Email Admin</a>
+        {% for message in messages %}
+        <div class="alert-info">{{message}}</div>
+        {%endfor%}
+        {% for error in form.errors%}
+        <div class="alert-danger">{{error}}</div>
+        {%endfor%}
+        <hr>
+        {{form_hood_change}}
 
-  {%block scripts%}
-  {%bootstrap_javascript%}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  {%endblock%}
+        <button type="submit" class="btn btn-default">Save Changes</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="close btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-outline-success">Save changes</button>
+    </div>
+    </form>
+  </div>
+</div>
 
 {%endblock%}
