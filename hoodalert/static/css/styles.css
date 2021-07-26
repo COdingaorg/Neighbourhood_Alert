@@ -28,6 +28,7 @@ body{
   font-size: 1.4em;
   width: 100vw;
   overflow-x: hidden;
+  height: 150vh;
 }
 h5,h4, .bold{
   font-weight: bold;
@@ -122,6 +123,16 @@ h5,h4, .bold{
 }
 .left_bar, .right_bar{
   margin: 0;
+  height: 100vh;
+}
+.left_bar{
+  background-color: var(--blue);
+}
+.lefter, .righter, .left_bar, .right_bar{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+
 }
 .index_page{
   display: flex;
@@ -139,6 +150,18 @@ span.post_image>img{
   min-height: 20px;
   height: auto;
   max-height: 40px;
+}
+.icon>img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+}
+.icon{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 /* style footer */
 .footer{
