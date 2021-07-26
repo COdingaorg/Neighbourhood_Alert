@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Business, User, UserProfile
+from .models import Business, Posts, User, UserProfile
+from hoodalert import models
 
 class RegisterUserForm(UserCreationForm):
   class Meta:
@@ -21,3 +22,8 @@ class AddBusiness(forms.ModelForm):
   class Meta:
     model = Business
     fields = ('name', 'email', 'location_or_Description', 'neighborhood')
+
+class AddPost(forms.ModelForm):
+  class Meta:
+    model = Posts
+    fields = ['title', 'description', 'post_image']

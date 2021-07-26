@@ -115,9 +115,18 @@ class Business(models.Model):
 
 class Posts(models.Model):
   title = models.CharField(max_length=100)
-  post = models.TextField()
-  poster = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  description = models.TextField()
   post_image = models.ImageField(upload_to = 'posts/')
+  poster = models.ForeignKey(UserProfile, on_delete=CASCADE)
+  
+
+  def __str__(self):
+    return self.title
+
+  @classmethod
+  def create_post(cls, name, title, description):
+    pass
+
 
   
 

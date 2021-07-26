@@ -1,7 +1,7 @@
 from hoodalert.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
-from hoodalert.forms import AddBusiness, LoginForm, RegisterUserForm, UserProfileForm
+from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
@@ -120,6 +120,20 @@ def add_business(request):
     }
 
     return render(request, 'all_templates/add_business.html', context)
+
+#view function to add post
+def add_post(request):
+  '''
+  renders to add post template
+  '''
+  form = AddPost
+  title = 'Add Post'
+
+  context = {
+    'form':form,
+    'title':title,
+  }
+  return render(request, 'all_templates/add_post.html', context)
 #view function to homepage
 def index(request):
   title = 'Home - Neighbourhood Alert'
