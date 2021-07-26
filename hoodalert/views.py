@@ -1,9 +1,10 @@
-from hoodalert.models import Business, HealthDep, PoliceDep, Posts, UserProfile
+from hoodalert.models import Business, HealthDep, Neighbourhood, PoliceDep, Posts, UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
 from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
+import datetime as dt
 
 # Create your views here.
 
@@ -122,45 +123,6 @@ def add_business(request):
 
     return render(request, 'all_templates/add_business.html', context)
 
-#view function to add post
-def add_post(request):
-  '''
-  renders to add post template
-  '''
-  form = AddPost
-  title = 'Add Post'
-  if request.method == 'POST':
-    form = AddPost(request.POST, request.FILES)
-    try:
-      user_profile = UserProfile.get_user_profile(request.user)
-    except UserProfile.DoesNotExist:
-      user_profile = None
-    
-    if user_profile is not None:
-      if form.is_valid():
-        new_post = form.save(commit=False)
-        
-        new_post.poster = user_profile
-        new_post.save()
-
-        context = {
-          'form':form,
-          'title':title,
-          }
-        messages.success(request, 'Post Created Successfully')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-      else:
-        messages.warning(request, 'Invalid Data')
-    else:
-      messages.warning(request, 'You need a User Profile to Add Post')
-      return redirect('add_profile')
-  else:
-
-    context = {
-      'form':form,
-      'title':title,
-    }
-    return render(request, 'all_templates/add_post.html', context)
 #view function to homepage
 def index(request):
   '''
@@ -168,7 +130,9 @@ def index(request):
   renders businesses that exist in the users hood
   renders posts, all posts created
   renders add post form
-  renders health centers and police deps
+  renders neighbourhood details
+  renders police_stns
+  renders hospitals
   '''
   form = AddPost
   #---------------------------------------------
@@ -185,6 +149,7 @@ def index(request):
         new_post = form.save(commit=False)
         
         new_post.poster = user_profile
+        new_post.date_created = dt.datetime.utcnow()
         new_post.save()
 
         context = {
@@ -212,23 +177,19 @@ def index(request):
       businesses = None
 
     try:
-      posts = Posts.objects.filter(neighborhood = user_profile.hood)
+      posts = Posts.objects.all()
     except Posts.DoesNotExist:
       posts = None
 
     try:
-      police_stns = PoliceDep.objects.filter(neighborhood = user_profile.hood)
-    except PoliceDep.DoesNotExist:
-      police_stns = None
-  
-    try:
-      hospitals = HealthDep.objects.filter(neighborhood = user_profile.hood)
-    except HealthDep.DoesNotExist:
-      hospitals = None
+      neighborhood = Neighbourhood.objects.get(name = user_profile.hood.name)
+    except Posts.DoesNotExist:
+      neighborhood = None
+      
+
 
     context = {
-      'police_stns':police_stns,
-      'hospitals':hospitals,
+      'neighborhood':neighborhood,
       'form':form,
       'posts':posts,
       'businesses':businesses,
