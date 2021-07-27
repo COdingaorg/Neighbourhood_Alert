@@ -5,14 +5,14 @@
 {% block content %}
 <div class="col-md-12">
   <div class="col-md-3 left_profile">
-    {% if not profile %}
+    {% if not user_profile %}
     <div class="prof_image" style="background-image: url('{% static 'images/human-avatar-profle.png' %}');
                background-position: center;
                background-size: contain;
                background-repeat:no-repeat;">
     </div>
     {%else%}
-    <div class="prof_image" style="background-image: url('{{profile.photo_path.url}}');
+    <div class="prof_image" style="background-image: url('{{user_profile.photo_path.url}}');
                background-position: center;
                background-size: contain;
                background-repeat:no-repeat;">
@@ -21,8 +21,8 @@
     {%endif%}
     <p>{{request.user.first_name}}-{{request.user.last_name}}</p>
     <!--if it is the owner, edit profile, else, follow-->
-    {%if profile %}
-    {% if request.user.id == profile.user.id%}
+    {%if user_profile %}
+    {% if request.user.id == user_profile.user.id%}
     <strong>
       <button type="button" class="btn btn-default m-2" data-toggle="modal" data-target="#addprofileModalLong"
         class="edit_profile">
@@ -43,9 +43,9 @@
         <p class="badge badge-success p-auto">Dashboard</p>
       </a>
 
-      <a href="" class="btn btn-warning redirect_btn col-md-10"  data-toggle="modal" data-target="#changehood">
+      <a href="" class="btn btn-warning redirect_btn col-md-10" data-toggle="modal" data-target="#changehood">
         <p class="badge badge-success p-auto">
-          {{profile.hood.name}}--Change Area
+          {{user_profile.hood.name}}--Change Area
         </p>
       </a>
       <a href="/" class="btn btn-warning redirect_btn col-md-8">
@@ -70,7 +70,7 @@
       {%endfor%}
       <div class="col-md-8">
         <h3>Hood Alert - {{request.user.username}}</h3>
-        <i>{% if profile %} {{profile.about}} {%else%} 'No About Added'{%endif%}</i>
+        <i>{% if user_profile %} {{user_profile.about}} {%else%} 'No About Added'{%endif%}</i>
       </div>
       <div class="col-md-3 d-flex flex-row">
         <a href="#" class="btn btn-warning redirect_btn col-md-8">
@@ -109,7 +109,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="exampleModalLongTitle">Update Profile</h5><img
-          src="{%if profile %}{{profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
+          src="{%if user_profile %}{{user_profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -119,7 +119,7 @@
         {{message}}
       </div>
       {%endfor%}
-      <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data" class="p-4">
+      <form action="{% url 'change_hood' %}" method="POST" enctype="multipart/form-data" class="p-4">
         {%csrf_token%}
         <h3 class="text-center">Add Profile:</h3>
         {% for message in messages %}
@@ -156,7 +156,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="exampleModalLongTitle">Update Profile</h5><img
-          src="{%if profile %}{{profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
+          src="{%if user_profile %}{{user_profile.photo_path.url}}{%endif%}" alt="profile" width="30px" height="30px">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -171,7 +171,9 @@
         <h3 class="text-center">Update Neighbourhood:</h3>
         <h6 class="text-center">Select from Drop-dowm</h6>
         <h6 class="text-center"> <i> If your neighborhood does not exist, let our admin know to update </i></h6>
-        <a href="mailto:calemasanga@gmail.com?cc = ''&bcc=caleb.odinga@student.moringaschool.com&subject=New%20Neighbourhood&to&add">Email Admin</a>
+        <a
+          href="mailto:calemasanga@gmail.com?cc = ''&bcc=caleb.odinga@student.moringaschool.com&subject=New%20Neighbourhood&to&add">Email
+          Admin</a>
         {% for message in messages %}
         <div class="alert-info">{{message}}</div>
         {%endfor%}
@@ -179,8 +181,14 @@
         <div class="alert-danger">{{error}}</div>
         {%endfor%}
         <hr>
-        {{form_hood_change}}
-
+        {% if hoods %}
+        {% for hood in hoods%}
+        <p class="bold">{{hood.name}}
+          <input type="radio" name="hood_name" id="hood_name" value="{{hood.id}}">
+        </p>
+        {%endfor%}
+        {%endif%}
+        <br>
         <button type="submit" class="btn btn-default">Save Changes</button>
       </form>
     </div>

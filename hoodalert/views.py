@@ -59,9 +59,12 @@ def logout_user(request):
 def add_user_profile(request):
   '''
   form to update user profile
+  adds form to change neighbourhood
+  renders hoods
   '''
   title = f'{request.user.username}\'s Profile - Hood alert'
   form = UserProfileForm
+  hoods = Neighbourhood.objects.all()
   try:
     profile = UserProfile.objects.filter(user = request.user).last()
   except UserProfile.DoesNotExist:
@@ -76,36 +79,45 @@ def add_user_profile(request):
       context = {
         'title':title,
         'form':form,
-        'profile':profile,
+        'user_profile':profile,
       }
       return render(request, 'all_templates/profile.html', context)
-  else:
-    form_hood_change = ChangeHood
-    if request.method == 'POST':
-      new_hood = form_hood_change.cleaned_data['hood']
-      profile_query = UserProfile.objects.filter(user = request.user)
-      if profile is not None:
-        profile_query.update(hood = 2)
-
-        context = {
-            'form_hood_change':form_hood_change,
-          }
-        return render(request,'all_templates/profile.html', context )
-      else:
-        context = {
-            'form_hood_change':form_hood_change,
-          }
-        messages.warning(request, 'Create User Profile to Proceed')
-        return render(request, 'all_templates/profile.html', context)
-
-  form_hood_change = ChangeHood
+  
+    
   context = {
-      'form_hood_change':form_hood_change,
-      'title':title,
-      'form':form,
-      'profile':profile,
-      }
+    'hoods':hoods,
+    'title':title,
+    'form':form,
+    'user_profile':profile,
+    }
   return render(request, 'all_templates/profile.html', context)
+
+# view function to change_hood
+def change_hood(request):
+  '''
+  renders form view function
+  '''
+  if request.method == 'POST':
+    new_hood_id = request.POST.get('hood_name')
+    try:
+      to_update_id = UserProfile.objects.get(user = request.user)
+    except:
+      to_update_id = None
+
+    if to_update_id is not None:
+      new_hood = Neighbourhood.objects.get(id = new_hood_id)
+      photo_path = to_update_id.photo_path
+      about = to_update_id.about
+      location_description = to_update_id.location_description
+      updated_user = UserProfile(photo_path = photo_path, about = about, location_description = location_description, hood = new_hood)
+      updated_user.save()
+      
+      return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+      messages.warning(request, 'Create User Profile to Proceed')
+      return render(request, 'all_templates/profile.html')
+
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def index(request):
   '''
