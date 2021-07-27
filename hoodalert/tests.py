@@ -38,6 +38,8 @@ class TestUserProfile(TestCase):
     new_pd.save()
     self.new_neighborhood = Neighbourhood(1,'Karuturi', '1st Avenue',200233, 1, 1)
     self.new_neighborhood.save()
+    self.new_neighborhood2 = Neighbourhood(2,'Isiolo', 'Narok',20933, 1, 1)
+    self.new_neighborhood2.save()
     self.new_user = User(1, 'pbkdf2_sha256$260000$NjKSHSB0A7GnXFtsT4LF3E$OtsaM4UTtddrKX81NiyU45bnVt8BOZLzHYHQP5D/fkw=','2021-07-25 00:44:38.631522+03', 'f' , 'codinga', 'caleb', 'odinga','calemasanga@gmail.com','f','t','2021-07-24 23:41:50.483079+03')
     self.new_user.save()
     self.new_profile = UserProfile(1, 'profiles/girl-cg-artwork-anime-art-anime-girl-wallpaper-preview.jpg', 'peacefule and communal', 'live love laugh','f',1,1)
@@ -65,6 +67,19 @@ class TestUserProfile(TestCase):
     uptodate.refresh_from_db()
 
     self.assertEqual(uptodate.about, new_about)
+
+  def test_update_hood(self):
+    self.new_profile.save_profile()
+    new_hood = Neighbourhood.objects.get(pk = 2)
+    UserProfile.update_hood(1, new_hood)
+    updated_user=UserProfile.objects.get(pk = 1)
+    updated_user.refresh_from_db()
+
+    self.assertEqual(updated_user.hood.name, new_hood.name)
+
+
+
+
 
 # class TestNeighbourhood(TestCase):
 #   def setUp(self):

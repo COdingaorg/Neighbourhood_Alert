@@ -92,6 +92,12 @@ class UserProfile(models.Model):
     user_profile = cls.objects.filter(user = user).last()
     return user_profile
 
+  @classmethod
+  def update_hood(cls, id, new_hood):
+    to_update = cls.objects.filter(user = id)
+    to_update.update(hood = new_hood)
+    
+
 class Admin(models.Model):
   user_prof = models.ForeignKey(UserProfile, on_delete=CASCADE)
   neighbourhood = models.ForeignKey(Neighbourhood, on_delete=CASCADE)  
