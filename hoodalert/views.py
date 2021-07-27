@@ -16,8 +16,8 @@ def register_user(request):
   if request.method == 'POST':
     form = RegisterUserForm(request.POST)
     if form.is_valid():
-      form.save()
-      newlogin =  authenticate(request, username = form.username, password = form.password1)
+      logger = form.save()
+      newlogin =  authenticate(request, username = logger.username, password = logger.password1)
 
       if newlogin is not None:
         login(request, newlogin)
