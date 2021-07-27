@@ -17,6 +17,12 @@ def register_user(request):
     form = RegisterUserForm(request.POST)
     if form.is_valid():
       form.save()
+      newlogin =  authenticate(request, username = form.username, password = form.password1)
+
+      if newlogin is not None:
+        login(request, newlogin)
+
+        return redirect('/')
 
       return redirect('login_user')
       
