@@ -69,6 +69,12 @@ def add_user_profile(request):
     profile = UserProfile.objects.filter(user = request.user).last()
   except UserProfile.DoesNotExist:
     profile = None
+
+  try:
+    posts = Posts.objects.filter(poster = profile).last()
+  except Posts.DoesNotExist or UserProfile.DoesNotExist:
+    posts = None
+
   if request.method == 'POST':
     form = UserProfileForm(request.POST, request.FILES)
     if form.is_valid():
@@ -85,6 +91,7 @@ def add_user_profile(request):
   
     
   context = {
+    'posts':posts,
     'hoods':hoods,
     'title':title,
     'form':form,
