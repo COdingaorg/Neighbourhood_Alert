@@ -322,3 +322,16 @@ svg#chart{
   font-size: .6em;
   padding: 1px;
 }
+/*styling for smaller screens*/
+@media screen and (max-width:768px) {
+  .lefter, .righter, .left_bar, .right_bar{
+    position: relative;
+  }
+  .lefter, .righter{
+    display: inline;
+  }
+  .content_bd{
+    display: flex;
+    flex-direction: column;
+  }
+}
