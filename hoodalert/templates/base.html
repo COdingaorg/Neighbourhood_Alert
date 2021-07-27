@@ -22,7 +22,9 @@
 </head>
 
 <body class="container-md-fluid">
+  {% block navbar %}
   {% include 'navbar.html' %}
+  {% endblock %}
   {% block content %}
 
   {%endblock%}

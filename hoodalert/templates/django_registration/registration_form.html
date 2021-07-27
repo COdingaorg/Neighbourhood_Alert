@@ -1,7 +1,28 @@
-<div class="reg_body row">
-  <div class="col-md-3"></div>
-  <div class="reg_form col-md-6">
-    <div class="col-md-6 formbanner">
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block navbar%}
+
+{%endblock%}
+
+{% block content %}
+<div class="row" style="height: auto; padding: 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-top: 20vh;
+                        ">
+  <div class="col-md-2"></div>
+  <div class="login_form col-md-8" style="background-color: white; 
+                                          border-radius: 20px; border: 1px solid grey; 
+                                          height: 100%; padding: 10px;
+                                          display: flex;
+                                          flex-direction: row;
+                                          border: 2px solid white;
+                                          padding: 0%;
+                                          background-image: url('../../static/images/house-architecture-modern-neighborhood-street-hd-wallpaper-preview.jpg');">
+    <div class="col-md-6 formbanner" style="background-color: white; border-radius: 20px 0 0 20px;">
       {% for error in form.errors%}
       <div class="alert alert-danger text-center">{{error}}</div>
       {% endfor %}
@@ -12,23 +33,33 @@
       <div>
         <form action="{% url 'register_user' %}" method="POST">
           {%csrf_token%}
-        <h5>{{form.username.label}}:</h5>{{form.username}}
-        <h5>{{form.first_name.label}}:</h5>{{form.first_name}}
-        <h5>{{form.last_name.label}}:</h5>{{form.last_name}}
-        <h5>{{form.email.label}}:</h5>{{form.email}}
-        <h5>{{form.password1.label}}:</h5>{{form.password1}}
-        <h5>{{form.password2.label}}:</h5>{{form.password2}}
-        <button class="btn btn-default text-center" type="submit">Register</button>
+          <h5>{{form.username.label}}:</h5>{{form.username}}
+          <h5>{{form.first_name.label}}:</h5>{{form.first_name}}
+          <h5>{{form.last_name.label}}:</h5>{{form.last_name}}
+          <h5>{{form.email.label}}:</h5>{{form.email}}
+          <h5>{{form.password1.label}}:</h5>{{form.password1}}
+          <h5>{{form.password2.label}}:</h5>{{form.password2}}
+          <hr>
+          <button class="btn btn-default text-center" type="submit">Register</button>
 
       </div>
     </div>
-    <div class="col-md-6 regbanner">
-      <h2 class="text-center">Welcome to Hood Alert</h2>
-      <p class="text-center p-4">To fully enjoy getting and sharing of news and whats up, create an account.</p>
-      <p class="text-center p-4">We know the importance of togetherness, and what more to bring people together than the same origin.</p>
-      <p class="text-center p-4">Always be in the know, be on the same page.</p>
-      <h5>Already have an account? <a href="">Log in</a></h5>
+    <div class="col-md-6 regbanner p-0"
+      style="background-image: url('../../static/images/house-architecture-modern-neighborhood-street-hd-wallpaper-preview.jpg'); border-radius: 0 20px 20px 0;">
+      <div class="real col-md-12" style="background-color: rgba(255, 255, 255, .7); width: 100%; height: 100%; font-weight: 600; margin-top: 0; padding: 5px; border-radius: 0 20px 20px 0;">
+        <h2 class="text-center">Welcome to </h2>
+        <h4 class="text-center">Hood Alert</h4>
+        <p class="text-center p-4">To fully enjoy getting and sharing of news and whats up, create an account.</p>
+        <p class="text-center p-4">We know the importance of togetherness, and what more to bring people together than
+          the same origin.</p>
+        <p class="text-center p-4">Always be in the know, be on the same page.</p>
+        <h5>Already have an account? <a href="{% url 'login_user' %}">Log in</a></h5>
+      </div>
     </div>
   </div>
-  <div class="col-md-3"></div>
+  <div class="col-md-2"></div>
 </div>
+{% block footer %}
+
+{%endblock%}
+{%endblock%}

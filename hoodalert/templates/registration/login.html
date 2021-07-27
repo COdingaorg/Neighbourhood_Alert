@@ -1,11 +1,70 @@
-<form action="{% url 'login_user' %}" method="POST">
-  {% for error in form.errors %}
-  {{error}}
-  {% endfor %}
-  {% csrf_token%}
-  {%for message in messages%}
-  <p class="alert alert-info p-4 text-center">{{message}}</p>
-  {%endfor%}
-  {{form}}
-  <button class="btn btn-default" type="submit">Log in</button>
-</form>
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block navbar%}
+
+{%endblock%}
+
+{% block content %}
+<div class="row" style="height: 60vh; padding: 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-top: 20vh;">
+  <div class="col-md-3"></div>
+
+  <div class="login_form col-md-6" style="background-color: white; 
+                                          border-radius: 20px; 
+                                          border: 2px solid white; 
+                                          color: white;
+                                          height: auto; padding: 10px;
+                                          display: flex;
+                                          flex-direction: row;
+                                          padding: 0;
+                                          background-image: url('../../static/images/login.jpeg');
+                                          background-size: contain;">
+    <div class="col-md-12" style="background-color: rgba(0, 0, 0, .4); border-radius: 20px;
+                                  border-radius: 20px; 
+                                  border: 2px solid white; 
+                                  color: white;
+                                  height: auto; padding: 10px;
+                                  display: flex;
+                                  flex-direction: row;">
+      <div class="col-md-6">
+        <form action="{% url 'login_user' %}" method="POST" style="color: black;">
+          {%csrf_token%}
+          <h3 class="text-center">Login:</h3>
+          {% for message in messages %}
+          <div class="alert-info p-4 text-center">{{message}}</div>
+          {%endfor%}
+          {% for error in form_buss.errors%}
+          <div class="alert-danger">{{error}}</div>
+          {%endfor%}
+
+          <h5 class="text-left">{{form.username.label}}:</h5>
+          <p>{{form.username}}</p>
+          <h5 class="text-left">{{form.password.label}}:</h5>
+          <p>{{form.password}}</p>
+
+          <button class="btn btn-default" type="submit">Log in</button>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <h2 class="text-center">Welcome Back!</h2>
+        <hr>
+        <h4 class="navbrand text-center">Hood Alert</h4>
+        <p class="text-center">
+          Already Have an Account? <a href="{% url 'register_user'%}">Register Now</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+{% block footer %}
+
+{%endblock%}
+{%endblock%}
