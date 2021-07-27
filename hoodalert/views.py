@@ -1,7 +1,7 @@
 from hoodalert.models import Business, HealthDep, Neighbourhood, PoliceDep, Posts, UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
-from hoodalert.forms import AddBusiness, AddPost, ChangeHood, LoginForm, RegisterUserForm, UserProfileForm
+from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 import datetime as dt
@@ -107,22 +107,25 @@ def change_hood(request):
   if request.method == 'POST':
     new_hood_id = request.POST.get('hood_name')
     try:
-      to_update_id = UserProfile.objects.get(user = request.user)
+      to_update_id = UserProfile.objects.filter(user = request.user).last()
     except:
       to_update_id = None
 
     if to_update_id is not None:
-      new_hood = Neighbourhood.objects.get(id = new_hood_id)
+
       photo_path = to_update_id.photo_path
       about = to_update_id.about
       location_description = to_update_id.location_description
-      updated_user = UserProfile(photo_path = photo_path, about = about, location_description = location_description, hood = new_hood)
-      updated_user.save()
-      
+      hood = Neighbourhood.objects.get(pk = new_hood_id)
+      user = request.user
+
+      new_hood = UserProfile(photo_path = photo_path, about = about, location_description = location_description, hood = hood, user = user)
+      new_hood.save()
+
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
       messages.warning(request, 'Create User Profile to Proceed')
-      return render(request, 'all_templates/profile.html')
+      return redirect('user_profile')
 
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

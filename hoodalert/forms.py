@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.db.models import fields
 from .models import Business, Posts, User, UserProfile
-from hoodalert import models
 
 class RegisterUserForm(UserCreationForm):
   class Meta:
@@ -37,8 +35,3 @@ class AddPost(forms.ModelForm):
         }),
     }
     fields = ['title', 'description', 'post_image']
-
-class ChangeHood(forms.ModelForm):
-  class Meta:
-    model = UserProfile
-    fields = ['hood']

@@ -142,8 +142,9 @@
         {% for message in messages %}
         <div class="alert-info">{{message}}</div>
         {%endfor%}
+        {{form.errors}}
         {% for error in form.errors%}
-        <div class="alert-danger">{{error}}</div>
+        <div class="alert-danger">{{error.label}}</div>
         {%endfor%}
         <hr>
         <h5 class="text-left">{{form.photo_path.label}}:</h5>
@@ -183,7 +184,7 @@
         {{message}}
       </div>
       {%endfor%}
-      <form action="{% url 'user_profile' %}" method="POST" enctype="multipart/form-data" class="p-4">
+      <form action="{% url 'change_hood' %}" method="POST" class="p-4">
         {%csrf_token%}
         <h3 class="text-center">Update Neighbourhood:</h3>
         <h6 class="text-center">Select from Drop-dowm</h6>
@@ -204,6 +205,8 @@
           <input type="radio" name="hood_name" id="hood_name" value="{{hood.id}}">
         </p>
         {%endfor%}
+        {%else%}
+        <p class="text-center">No Neighbourhoods to select</p>
         {%endif%}
         <br>
         <button type="submit" class="btn btn-default">Save Changes</button>
