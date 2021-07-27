@@ -119,7 +119,7 @@ h5,h4, .bold{
   box-shadow: 1px 1px 10px 1px var(--backg);
 }
 .lefter, .righter{
-  height: 100vh;
+  height: 120vh;
 }
 .left_bar, .right_bar{
   margin: 0;

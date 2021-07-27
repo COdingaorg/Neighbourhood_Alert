@@ -18,28 +18,28 @@
       </div>
     </a>
     <a href="#police">
-    <div class="icon">
-      <img src="../../static/images/police.png" alt="police">
-      <h6 class="text-center bold">Police Stations</h6>
-    </div>
-    <a href="#business">
       <div class="icon">
-        <img src="../../static/images/shop.jpg" alt="business">
-        <h6 class="text-center bold">Business</h6>
+        <img src="../../static/images/police.png" alt="police">
+        <h6 class="text-center bold">Police Stations</h6>
       </div>
-    </a>
-    <a href="#members">
-      <div class="icon">
-        <img src="../../static/images/user_groups.png" alt="members">
-        <h6 class="text-center bold">Members</h6>
-      </div>
-    </a>
-    <a href="#weather">
-      <div class="icon">
-        <img src="../../static/images/weather.png" alt="weather">
-        <h6 class="text-center bold">Weather</h6>
-      </div>
-    </a>
+      <a href="#business">
+        <div class="icon">
+          <img src="../../static/images/shop.jpg" alt="business">
+          <h6 class="text-center bold">Business</h6>
+        </div>
+      </a>
+      <a href="#members">
+        <div class="icon">
+          <img src="../../static/images/user_groups.png" alt="members">
+          <h6 class="text-center bold">Members</h6>
+        </div>
+      </a>
+      <a href="#weather">
+        <div class="icon">
+          <img src="../../static/images/weather.png" alt="weather">
+          <h6 class="text-center bold">Weather</h6>
+        </div>
+      </a>
   </div>
   <div class="business_loop col-md-9">
     <div class="area_business col-md-12">
@@ -144,24 +144,28 @@
         <!--start of post loops-->
         {%if posts%}
         {% for post in posts %}
-        <div class="post_loop m-3" id="post_loop">
+        <div class="post_loop m-3 p-0" id="post_loop">
           <div class="title">
-            <span class="post_image"><img src="{{post.poster.photo_path}}" alt="" width="30" height="30px"></span>
+            <span class="post_image"><img src="{{post.poster.photo_path.url}}" alt="" width="30" height="30px"></span>
             <span class="bold">{{post.poster.user.username}}</span><span
               class="ml-auto">{%if post.date_created%}{{post.date_created|timesince}}{%endif%}</span>
-            <hr>
-            <div class="post_image" style="background-image: url('{{post.post_image.url}}');
+          </div>
+          <hr>
+          <div class="post_image" style="background-image: url('{{post.post_image.url}}');
                                           height: 250px;
-                                          width: 100%;">
+                                          width: 100%;
+                                          background-position: center;
+                                          background-size: contain;
+                                          background-repeat: no-repeat;">
 
-            </div>
+          </div>
             <p class="bold">{{post.title}}</p>
             <h6 class="post_desc">{{post.description}}</h6>
+          <div class="tags d-flex flex-row m-1">
+            <p class="m-0">Tags:</p>
+            <h6 class="bold badge badge-warning m-2">{{post.poster.hood.name}}</h6>
+            <h6 class="bold badge badge-warning m-2">{{post.title|truncatechars:9}}</h6>
           </div>
-          <div class="tags d-flex flex-row"></div>
-          <p class="m-0">Tags:</p>
-          <h6 class="bold badge badge-warning">{{post.poster.hood.name}}</h6>
-          <h6 class="bold badge badge-warning">{{post.title|truncatechars:9}}</h6>
         </div>
         {%endfor%}
         {%else%}
