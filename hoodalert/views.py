@@ -1,5 +1,6 @@
-from hoodalert.models import Business, HealthDep, Neighbourhood, PoliceDep, Posts, UserProfile
+from hoodalert.models import Business, Neighbourhood, Posts, UserProfile
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
 from hoodalert.forms import AddBusiness, AddPost, LoginForm, RegisterUserForm, UserProfileForm
 from django.shortcuts import redirect, render
@@ -48,6 +49,7 @@ def login_user(request):
   return render(request, 'registration/login.html', context)
 
 #logout view function
+@login_required(login_url='login')
 def logout_user(request):
   '''
   logout a logged in user
@@ -56,6 +58,7 @@ def logout_user(request):
 
   return redirect('login_user')
 #view function to user profile
+@login_required(login_url='login')
 def add_user_profile(request):
   '''
   form to update user profile
@@ -100,6 +103,7 @@ def add_user_profile(request):
   return render(request, 'all_templates/profile.html', context)
 
 # view function to change_hood
+@login_required(login_url='login')
 def change_hood(request):
   '''
   renders form view function
@@ -129,6 +133,7 @@ def change_hood(request):
 
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required(login_url='login')
 def index(request):
   '''
   renders user profile
@@ -251,6 +256,7 @@ def index(request):
     return render(request, 'all_templates/index.html', context)
 
 #view function to search businesses
+@login_required(login_url='login')
 def search_business(request):
    #--------------------------------------------------------------
   #search busness
