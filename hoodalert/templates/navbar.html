@@ -18,7 +18,7 @@
       <a class="nav-item nav-link" href="#weather">Weather</a>
       <a class="nav-item nav-link" href="#post_loop">Posts</a>
 
-      <img src="{{user_profile.photo_path.url}}" alt="" class="ml-5 mr-5" width="30px" height="30px">
+      <img src="{% if user_profile %}{{user_profile.photo_path.url}}{%else%}../../../static/images/human-avatar-profle.png{%endif%}" alt="" class="ml-5 mr-5" width="30px" height="30px" style="background-color: white; border-radius: 50%;">
       {% if request.user.is_authenticated %}
       <div class="dropdown">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
